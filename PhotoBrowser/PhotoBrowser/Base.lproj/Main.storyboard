@@ -24,6 +24,92 @@
             </objects>
             <point key="canvasLocation" x="3402.898550724638" y="-561.16071428571422"/>
         </scene>
+        <!--Photo Scroller View Controller-->
+        <scene sceneID="vmB-bw-YFu">
+            <objects>
+                <viewController storyboardIdentifier="PhotoScroller" id="1nw-ho-8hG" customClass="PhotoScrollerViewController" customModule="PhotoBrowser" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OYB-JS-ehS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ASW-Z2-vdO">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vMP-Ar-CNy">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScrollerCell" id="Jgd-kg-FeY" customClass="ScrollerCollectionViewCell" customModule="PhotoBrowser" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="-5.5" width="414" height="829"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yYv-a9-YQY">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="829"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JYh-S9-9Bo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="829"/>
+                                                    <subviews>
+                                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50e-dt-rSN">
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="829"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" priority="250" constant="414" id="i2B-ud-FWe"/>
+                                                                <constraint firstAttribute="height" priority="250" constant="829" id="uIg-bZ-o0K"/>
+                                                            </constraints>
+                                                        </scrollView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="50e-dt-rSN" firstAttribute="centerY" secondItem="JYh-S9-9Bo" secondAttribute="centerY" id="Btb-zi-25K"/>
+                                                        <constraint firstItem="50e-dt-rSN" firstAttribute="centerX" secondItem="JYh-S9-9Bo" secondAttribute="centerX" id="QKS-3I-oRp"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="50e-dt-rSN" secondAttribute="trailing" id="WTM-3D-aS3"/>
+                                                        <constraint firstItem="50e-dt-rSN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JYh-S9-9Bo" secondAttribute="leading" id="hwm-g4-y8C"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="50e-dt-rSN" secondAttribute="bottom" id="lEU-Dh-XdC"/>
+                                                        <constraint firstItem="50e-dt-rSN" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JYh-S9-9Bo" secondAttribute="top" id="sdl-9e-HfE"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JYh-S9-9Bo" firstAttribute="top" secondItem="yYv-a9-YQY" secondAttribute="top" id="D4Z-VK-OwO"/>
+                                                <constraint firstItem="JYh-S9-9Bo" firstAttribute="leading" secondItem="yYv-a9-YQY" secondAttribute="leading" id="D8C-c9-3Zg"/>
+                                                <constraint firstAttribute="trailing" secondItem="JYh-S9-9Bo" secondAttribute="trailing" id="UMd-3d-rC4"/>
+                                                <constraint firstAttribute="bottom" secondItem="JYh-S9-9Bo" secondAttribute="bottom" id="nZs-Z5-e5K"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="414" height="829"/>
+                                        <connections>
+                                            <outlet property="mainView" destination="JYh-S9-9Bo" id="hYH-5R-bId"/>
+                                            <outlet property="scrollView" destination="50e-dt-rSN" id="MUd-cf-D6B"/>
+                                            <outlet property="scrollViewHeight" destination="uIg-bZ-o0K" id="Qo3-Rv-fi6"/>
+                                            <outlet property="scrollViewWidth" destination="i2B-ud-FWe" id="UpA-cq-aSS"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="1nw-ho-8hG" id="VXi-l1-dQA"/>
+                                    <outlet property="delegate" destination="1nw-ho-8hG" id="KWN-Ml-1rH"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ASW-Z2-vdO" firstAttribute="bottom" secondItem="iL4-az-gO8" secondAttribute="bottom" id="ST2-87-J8I"/>
+                            <constraint firstItem="ASW-Z2-vdO" firstAttribute="top" secondItem="iL4-az-gO8" secondAttribute="top" id="SXk-7h-CuE"/>
+                            <constraint firstItem="ASW-Z2-vdO" firstAttribute="leading" secondItem="iL4-az-gO8" secondAttribute="leading" id="ZhW-rf-e1S"/>
+                            <constraint firstItem="ASW-Z2-vdO" firstAttribute="trailing" secondItem="iL4-az-gO8" secondAttribute="trailing" id="e9V-Bo-h64"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iL4-az-gO8"/>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="ASW-Z2-vdO" id="nbi-x8-rDr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ghY-gm-GF4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3402.898550724638" y="-1285.7142857142856"/>
+        </scene>
         <!--User Photos View Controller-->
         <scene sceneID="evH-lq-tFY">
             <objects>

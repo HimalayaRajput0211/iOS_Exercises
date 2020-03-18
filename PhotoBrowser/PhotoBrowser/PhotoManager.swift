@@ -19,7 +19,7 @@ class PhotoManager {
         photos.append(photo)
     }
     
-    func downloadImages(from data: NSArray, completion: @escaping () -> Void ) {
+    func downloadAllImages(from data: NSArray, completion: @escaping () -> Void ) {
         var count = 0
         let dispatchGroup = DispatchGroup()
         data.forEach { dataItems in

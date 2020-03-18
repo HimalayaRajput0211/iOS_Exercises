@@ -74,7 +74,7 @@ class UserPhotosViewController: UIViewController {
         graphRequest.start { (connection, response, error) in
             if let responseDict = response as? NSDictionary {
                 if let data = responseDict["data"] as? NSArray {
-                    PhotoManager.shared.downloadImages(from: data) { [weak self] in
+                    PhotoManager.shared.downloadAllImages(from: data) { [weak self] in
                         guard let self = self else { return }
                         self.images = PhotoManager.shared.photos
                         self.collectionView.reloadData()
@@ -124,8 +124,8 @@ extension UserPhotosViewController:UICollectionViewDataSource, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         loginButton.isHidden = true
-        if let nextVC = storyboard?.instantiateViewController(withIdentifier: "PhotoVC") as? PhotoViewController {
-            nextVC.currentIndex = indexPath.row
+        if let nextVC = storyboard?.instantiateViewController(withIdentifier: PhotoScrollerViewController.identifier) as? PhotoScrollerViewController {
+            nextVC.selectedRow = indexPath.row
             self.navigationController?.pushViewController(nextVC, animated: true)
         }
     }
