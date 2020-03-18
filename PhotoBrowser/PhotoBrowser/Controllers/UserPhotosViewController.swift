@@ -14,9 +14,10 @@ class UserPhotosViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     private var images = PhotoManager.shared.photos
     private var spacing: CGFloat = 5.0
-    private var buttonWidth: CGFloat = 120.0
-    private var buttonHeight: CGFloat = 35.0
+    private var buttonWidth: CGFloat = Constants.buttonWidth
+    private var buttonHeight: CGFloat = Constants.buttonHeight
     private var requiredPermission: String = "user_photos"
+    private var controllerTitle = "User Photos"
     private var loginButton:FBLoginButton!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,7 +27,7 @@ class UserPhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "User Photos"
+        title = controllerTitle
         layoutCollectionView()
         setupLoginbutton()
     }
@@ -106,9 +107,9 @@ extension UserPhotosViewController:UICollectionViewDataSource, UICollectionViewD
     private func ItemSize() -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         var numberOfItemPerRow: CGFloat!
-        if screenWidth < 768 {
+        if screenWidth < Constants.comparingWidth {
             numberOfItemPerRow = 3
-        } else if screenWidth == 768 {
+        } else if screenWidth == Constants.comparingWidth {
             numberOfItemPerRow = 4
         } else {
             numberOfItemPerRow = 5
@@ -118,7 +119,7 @@ extension UserPhotosViewController:UICollectionViewDataSource, UICollectionViewD
             let width = (collectionView.bounds.width - totalSpacing) / numberOfItemPerRow
             return CGSize(width: width, height: width)
         } else {
-            return CGSize(width: 0.0, height: 0.0)
+            return CGSize.zero
         }
     }
 
@@ -153,7 +154,7 @@ extension UserPhotosViewController: LoginButtonDelegate {
                     trailingPadding = 5.0
                 }
             } else {
-                buttonHeight = 35.0
+                buttonHeight = Constants.buttonHeight
             }
             button.frame.size.height = buttonHeight
             let remainingSpace = barHeight - buttonHeight
@@ -173,4 +174,10 @@ extension UserPhotosViewController: LoginButtonDelegate {
         collectionView.reloadData()
     }
 }
-
+extension UserPhotosViewController {
+    struct Constants {
+          static let buttonWidth: CGFloat = 120.0
+          static let buttonHeight: CGFloat = 35.0
+          static let comparingWidth: CGFloat = 768.0
+    }
+}

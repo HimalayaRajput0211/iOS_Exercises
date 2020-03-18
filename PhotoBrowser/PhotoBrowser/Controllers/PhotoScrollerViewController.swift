@@ -12,6 +12,7 @@ class PhotoScrollerViewController: UIViewController {
     private var imageArray = PhotoManager.shared.photos
     private var allowRightRepeat = true
     private var allowLeftRepeat = true
+    private var spacing: CGFloat = 0.0
     var selectedRow: Int!
     lazy private var arrayCount: Int = {
            return imageArray.count
@@ -31,9 +32,9 @@ class PhotoScrollerViewController: UIViewController {
     
     private func layoutCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
         layout.scrollDirection = .horizontal
         collectionView.isPagingEnabled = true
         collectionView.collectionViewLayout = layout
