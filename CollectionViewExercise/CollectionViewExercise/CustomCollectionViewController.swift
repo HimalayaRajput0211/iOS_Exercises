@@ -12,7 +12,7 @@ class CustomCollectionViewController: UIViewController {
     private var items = ["a", "b","c","d", "e","f","g", "h","i","j", "k","l","m", "n","o","p", "q","r","s", "t","u","v", "w","x","y","z"]
     private let spacing: CGFloat = 10.0
     private let insertingElements = ["A","B","C"]
-    private var animatioDuration: Double {
+    private var animationDuration: Double {
         if let animationSpeed = animationSpeed.text , let duration = Double(animationSpeed) {
             return duration < 0 ? -duration : duration
         }
@@ -100,7 +100,7 @@ class CustomCollectionViewController: UIViewController {
     }
     
     private func animate(_ completion: @escaping () ->  Void ) {
-        UIView.animate(withDuration: animatioDuration) {
+        UIView.animate(withDuration: animationDuration) {
             completion()
         }
     }
@@ -212,7 +212,7 @@ extension CustomCollectionViewController: UICollectionViewDataSource , UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? CustomCollectionViewCell {
-            cell.flipCardAnimationWith(animationDuration: animatioDuration) {
+            cell.flipCardAnimationWith(animationDuration: animationDuration) {
                 self.items.remove(at: indexPath.row)
                 self.collectionView.deleteItems(at: [indexPath])
             }
