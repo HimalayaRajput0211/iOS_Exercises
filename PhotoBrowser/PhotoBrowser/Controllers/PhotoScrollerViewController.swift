@@ -40,7 +40,7 @@ class PhotoScrollerViewController: UIViewController {
         collectionView.collectionViewLayout = layout
         collectionView.alpha = 0
     }
-
+    
 }
 
 extension PhotoScrollerViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
