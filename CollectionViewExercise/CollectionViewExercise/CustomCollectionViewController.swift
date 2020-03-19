@@ -121,6 +121,7 @@ class CustomCollectionViewController: UIViewController {
     }
     
     private func deleteThreeItemsAtEnd() {
+        guard items.count > 2 else { return }
         let deleteIndexpath: [IndexPath] = getRequiredIndexpaths(from: items.endIndex - 3).reversed()
         items.removeLast(3)
         animate {
@@ -131,6 +132,7 @@ class CustomCollectionViewController: UIViewController {
     }
     
     private func updateItemAtSecondIndex() {
+        guard items.count > 2 else { return }
         items[2] = "🦕"
         let updatingIndexpath = [IndexPath(row: 2)]
         animate {
@@ -152,6 +154,7 @@ class CustomCollectionViewController: UIViewController {
     }
     
     private func deleteThreeItemsAtBeginningThenInsertThreeItemsAtEnd() {
+        guard items.count > 2 else { return }
         let deletingIndexPaths = getRequiredIndexpaths(from: items.startIndex)
         items.removeFirst(3)
         animate { [unowned self] in
