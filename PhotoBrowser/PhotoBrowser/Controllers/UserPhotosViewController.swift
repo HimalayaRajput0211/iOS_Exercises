@@ -101,10 +101,10 @@ extension UserPhotosViewController:UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return ItemSize()
+        return itemSize()
     }
     
-    private func ItemSize() -> CGSize {
+    private func itemSize() -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         var numberOfItemPerRow: CGFloat!
         if screenWidth < Constants.comparingWidth {
