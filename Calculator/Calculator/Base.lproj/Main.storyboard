@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,14 +12,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CalculatorViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-qS-HPr">
-                                <rect key="frame" x="0.0" y="44" width="414" height="204.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="edN-4u-Gu3">
-                                        <rect key="frame" x="20" y="122.5" width="374" height="72"/>
+                                        <rect key="frame" x="20" y="68" width="560" height="72"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -35,16 +34,15 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Mu-6R-qBm">
-                                <rect key="frame" x="0.0" y="248.5" width="414" height="613.5"/>
+                                <rect key="frame" x="0.0" y="150" width="600" height="450"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Bcr-rb-OhD">
-                                        <rect key="frame" x="20" y="137.5" width="374" height="446"/>
+                                        <rect key="frame" x="20" y="384" width="560" height="36"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qkg-ex-UmZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="83" height="446"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="36"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPH-Mg-l4b">
-                                                        <rect key="frame" x="0.0" y="0.0" width="83" height="83"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="uPH-Mg-l4b" secondAttribute="height" multiplier="1:1" id="PTr-37-9Tc"/>
@@ -57,11 +55,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kAg-J2-NWG"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kAg-J2-NWG"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CCE-ht-TQE">
-                                                        <rect key="frame" x="0.0" y="91" width="83" height="82.5"/>
+                                                        <rect key="frame" x="0.0" y="9" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="CCE-ht-TQE" secondAttribute="height" multiplier="1:1" id="01R-3m-ua7"/>
@@ -74,11 +72,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUg-86-PyM"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vUg-86-PyM"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Whw-Fj-ofK">
-                                                        <rect key="frame" x="0.0" y="181.5" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="18" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Whw-Fj-ofK" secondAttribute="height" multiplier="1:1" id="kew-my-fhz"/>
@@ -91,11 +89,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dxA-Mm-7i2"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dxA-Mm-7i2"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jw3-5O-8fx">
-                                                        <rect key="frame" x="0.0" y="272.5" width="83" height="82.5"/>
+                                                        <rect key="frame" x="0.0" y="27" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Jw3-5O-8fx" secondAttribute="height" multiplier="1:1" id="w7J-gW-OxW"/>
@@ -108,11 +106,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vAm-mc-q4Z"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vAm-mc-q4Z"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLs-WC-ac5">
-                                                        <rect key="frame" x="0.0" y="363" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="36" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="WLs-WC-ac5" secondAttribute="height" multiplier="1:1" id="oJV-Qg-FUb"/>
@@ -125,11 +123,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iwu-nK-8dn"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iwu-nK-8dn"/>
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tsN-r8-I33">
-                                                        <rect key="frame" x="0.0" y="450" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="40" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="tsN-r8-I33" secondAttribute="height" multiplier="1:1" id="k4w-71-4ub"/>
@@ -142,16 +140,15 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Le-nh-dil"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Le-nh-dil"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gzH-0H-Vd1">
-                                                <rect key="frame" x="97" y="0.0" width="83" height="446"/>
+                                                <rect key="frame" x="186.5" y="0.0" width="0.0" height="36"/>
                                                 <subviews>
                                                     <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNZ-6O-oFf">
-                                                        <rect key="frame" x="0.0" y="0.0" width="83" height="83"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="zNZ-6O-oFf" secondAttribute="height" multiplier="1:1" id="98t-br-Ww0"/>
@@ -161,11 +158,11 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XOf-hC-FPC"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XOf-hC-FPC"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wf8-1a-WUw">
-                                                        <rect key="frame" x="0.0" y="91" width="83" height="82.5"/>
+                                                        <rect key="frame" x="0.0" y="9" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Wf8-1a-WUw" secondAttribute="height" multiplier="1:1" id="G7z-1W-mh5"/>
@@ -178,11 +175,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zIG-jL-aHc"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zIG-jL-aHc"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N91-gm-50y">
-                                                        <rect key="frame" x="0.0" y="181.5" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="18" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="N91-gm-50y" secondAttribute="height" multiplier="1:1" id="Oxq-IR-d0N"/>
@@ -195,11 +192,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V2I-7l-QpJ"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V2I-7l-QpJ"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IqX-nB-qAc">
-                                                        <rect key="frame" x="0.0" y="272.5" width="83" height="82.5"/>
+                                                        <rect key="frame" x="0.0" y="27" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="IqX-nB-qAc" secondAttribute="height" multiplier="1:1" id="JNw-c5-uev"/>
@@ -212,11 +209,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gcZ-zP-a6R"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gcZ-zP-a6R"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PH-jc-6gL">
-                                                        <rect key="frame" x="0.0" y="363" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="36" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="0PH-jc-6gL" secondAttribute="height" multiplier="1:1" id="aBQ-Dm-gzS"/>
@@ -229,11 +226,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dma-Eh-dbq"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dma-Eh-dbq"/>
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0c-bP-pK8">
-                                                        <rect key="frame" x="0.0" y="450" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="40" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="f0c-bP-pK8" secondAttribute="height" multiplier="1:1" id="ITZ-p6-iSc"/>
@@ -246,16 +243,16 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xa4-3n-OAr"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xa4-3n-OAr"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fsj-Sz-gqg">
-                                                <rect key="frame" x="194" y="0.0" width="83" height="446"/>
+                                                <rect key="frame" x="372.5" y="0.0" width="1" height="36"/>
                                                 <subviews>
                                                     <button opaque="NO" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fsg-u0-lbb">
-                                                        <rect key="frame" x="0.0" y="0.0" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="1" height="1"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="fsg-u0-lbb" secondAttribute="height" multiplier="1:1" id="IEo-RP-oyp"/>
@@ -265,11 +262,11 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hhh-cK-ZgM"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hhh-cK-ZgM"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBB-Lf-iIe">
-                                                        <rect key="frame" x="0.0" y="91" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="9" width="1" height="1"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="rBB-Lf-iIe" secondAttribute="height" multiplier="1:1" id="yUw-m5-mgi"/>
@@ -282,11 +279,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8h8-LQ-O7Z"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8h8-LQ-O7Z"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIA-Wf-DWv">
-                                                        <rect key="frame" x="0.0" y="182" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="18" width="1" height="1"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="nIA-Wf-DWv" secondAttribute="height" multiplier="1:1" id="M5w-vR-pIC"/>
@@ -299,11 +296,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ubB-ie-Jnp"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ubB-ie-Jnp"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1I-zJ-v2V">
-                                                        <rect key="frame" x="0.0" y="273" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="27" width="1" height="1"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="N1I-zJ-v2V" secondAttribute="height" multiplier="1:1" id="5iU-Qd-pug"/>
@@ -316,11 +313,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2db-hM-GxX"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2db-hM-GxX"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fe2-ih-IWW">
-                                                        <rect key="frame" x="0.0" y="364" width="83" height="82"/>
+                                                        <rect key="frame" x="0.0" y="36" width="1" height="0.0"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Fe2-ih-IWW" secondAttribute="height" multiplier="1:1" constant="1" id="6qT-CT-K7c"/>
@@ -333,11 +330,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Hh-tG-Q39"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Hh-tG-Q39"/>
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46X-Yd-rhm">
-                                                        <rect key="frame" x="0.0" y="450" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="40" width="1" height="1"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="46X-Yd-rhm" secondAttribute="height" multiplier="1:1" id="TFS-Kp-cjp"/>
@@ -350,16 +347,15 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gQa-AE-9bm"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gQa-AE-9bm"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vHR-Ah-hFz">
-                                                <rect key="frame" x="291" y="0.0" width="83" height="446"/>
+                                                <rect key="frame" x="560" y="0.0" width="0.0" height="36"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bci-tk-x52">
-                                                        <rect key="frame" x="0.0" y="0.0" width="83" height="83"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="Bci-tk-x52" secondAttribute="height" multiplier="1:1" id="5Qt-Yb-BNH"/>
@@ -372,11 +368,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j3j-Ft-Cy3"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j3j-Ft-Cy3"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3d-Gl-8mI">
-                                                        <rect key="frame" x="0.0" y="91" width="83" height="82.5"/>
+                                                        <rect key="frame" x="0.0" y="9" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="u3d-Gl-8mI" secondAttribute="height" multiplier="1:1" id="GUt-Yy-hwg"/>
@@ -389,11 +385,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0IV-Z9-qgu"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0IV-Z9-qgu"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdN-qv-Fjk">
-                                                        <rect key="frame" x="0.0" y="181.5" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="18" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="qdN-qv-Fjk" secondAttribute="height" multiplier="1:1" id="jqf-nM-h5n"/>
@@ -406,11 +402,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ClV-cW-ot8"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ClV-cW-ot8"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qj1-Qt-Uw9">
-                                                        <rect key="frame" x="0.0" y="272.5" width="83" height="82.5"/>
+                                                        <rect key="frame" x="0.0" y="27" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="qj1-Qt-Uw9" secondAttribute="height" multiplier="1:1" id="7hr-Wp-sfA"/>
@@ -423,11 +419,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sct-tM-sgt"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sct-tM-sgt"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWN-DC-7G8">
-                                                        <rect key="frame" x="0.0" y="363" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="36" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="JWN-DC-7G8" secondAttribute="height" multiplier="1:1" id="qUX-ND-2mJ"/>
@@ -440,11 +436,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                                         </variation>
                                                         <connections>
-                                                            <action selector="tapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fL7-yF-Otd"/>
+                                                            <action selector="updateCalculatorLogic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fL7-yF-Otd"/>
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjP-4g-zMU">
-                                                        <rect key="frame" x="0.0" y="450" width="83" height="83"/>
+                                                        <rect key="frame" x="0.0" y="40" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="WjP-4g-zMU" secondAttribute="height" multiplier="1:1" id="EnR-j8-Fwx"/>

@@ -54,4 +54,14 @@ extension ScrollerCollectionViewCell : UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
+    
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        NotificationCenter.default.post(name: .hideNavigationBar, object: nil)
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        if scale == initialZoomScale {
+            NotificationCenter.default.post(name: .showNavigationBar, object: nil)
+        }
+    }
 }

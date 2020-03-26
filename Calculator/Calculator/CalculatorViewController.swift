@@ -19,7 +19,7 @@ class CalculatorViewController: UIViewController {
     @IBOutlet private weak var stack3: UIStackView!
     @IBOutlet private weak var stack4: UIStackView!
     @IBOutlet weak var label: UILabel!
-    @IBAction private func tapped(_ sender: UIButton) {
+    @IBAction private func updateCalculatorLogic(_ sender: UIButton) {
         switch sender.currentTitle {
         case "": break
         case "+","-","*","/": arithmeticOperatorSelected(on: sender)

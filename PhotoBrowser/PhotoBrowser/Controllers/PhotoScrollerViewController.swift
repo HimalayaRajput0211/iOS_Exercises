@@ -15,14 +15,25 @@ class PhotoScrollerViewController: UIViewController {
     private var spacing: CGFloat = 0.0
     var selectedRow: Int!
     lazy private var arrayCount: Int = {
-           return imageArray.count
-       }()
+        return imageArray.count
+    }()
     
     @IBOutlet private weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         layoutCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(hideNavigationBar), name: .hideNavigationBar, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showNavigationBar), name: .showNavigationBar, object: nil)
     }
-  
+    
+    @objc private func hideNavigationBar() {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    @objc private func showNavigationBar() {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let indexPath = IndexPath(row: selectedRow, section: 0)
@@ -64,6 +75,7 @@ extension PhotoScrollerViewController: UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? ScrollerCollectionViewCell {
             cell.scrollView.zoomScale = cell.initialZoomScale
+            NotificationCenter.default.post(name: .showNavigationBar, object: self)
         }
     }
 }
@@ -107,4 +119,9 @@ extension PhotoScrollerViewController {
         let indexpath = IndexPath(row: imageArray.count, section: 0)
         collectionView.scrollToItem(at: indexpath , at: .right, animated: false)
     }
+}
+
+extension Notification.Name {
+    static let hideNavigationBar = Notification.Name("hideNavigationBar")
+    static let showNavigationBar = Notification.Name("showNavigationBar")
 }
