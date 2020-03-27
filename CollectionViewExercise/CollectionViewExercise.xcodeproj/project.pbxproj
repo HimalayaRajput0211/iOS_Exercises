@@ -64,14 +64,12 @@
 		555F50552422485700AD64B3 /* CollectionViewExercise */ = {
 			isa = PBXGroup;
 			children = (
+				55E4F6DE242DF02D003782D0 /* Controllers */,
 				555F506A2422486400AD64B3 /* Supporting Files */,
-				555F505A2422485700AD64B3 /* CustomCollectionViewController.swift */,
 				555F505C2422485700AD64B3 /* Main.storyboard */,
 				555F50642422485800AD64B3 /* Info.plist */,
 				552C8F26242349EB00B28E82 /* CustomLayout.swift */,
-				552C8F2824234A2B00B28E82 /* CustomCollectionViewCell.swift */,
 				552C8F2A24236A3900B28E82 /* Utilities.swift */,
-				5549593F242CD4AC0001BF7F /* ConfigurationViewController.swift */,
 			);
 			path = CollectionViewExercise;
 			sourceTree = "<group>";
@@ -85,6 +83,16 @@
 				555F50612422485800AD64B3 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55E4F6DE242DF02D003782D0 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				555F505A2422485700AD64B3 /* CustomCollectionViewController.swift */,
+				552C8F2824234A2B00B28E82 /* CustomCollectionViewCell.swift */,
+				5549593F242CD4AC0001BF7F /* ConfigurationViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

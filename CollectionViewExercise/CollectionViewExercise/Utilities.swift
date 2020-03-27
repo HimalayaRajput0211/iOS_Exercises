@@ -10,14 +10,15 @@ import Foundation
 import UIKit
 
 extension CGFloat {
+    /*
+     this initializer converts String to CGFloat 
+    */
     init(_ value: String?) {
         self.init()
         if let newValue = value, let doubleValue = Double(newValue) {
-            if doubleValue < 0 {
-                self = -CGFloat(doubleValue)
-            } else {
-                self = CGFloat(doubleValue)
-            }
+            self = CGFloat(doubleValue)
+        } else {
+          self = 0
         }
     }
 }
@@ -25,23 +26,6 @@ extension CGFloat {
 extension IndexPath {
      init(row: Int) {
         self.init(row: row, section: 0)
-    }
-}
-
-@propertyWrapper
-struct MaximumValue {
-    var maximum: CGFloat
-    var value: CGFloat
-    var wrappedValue: CGFloat {
-        get {
-            return value
-        } set {
-            value = min(maximum, newValue)
-        }
-    }
-    init(wrappedValue: CGFloat, maximum: CGFloat ) {
-        self.maximum = maximum
-        value = min(maximum, wrappedValue)
     }
 }
 
@@ -59,5 +43,17 @@ struct MaximumDuration {
     init(wrappedValue: Double) {
         maximum = ConfigurationViewController.maximumDuration
         duration = min(wrappedValue, maximum)
+    }
+}
+
+extension UIViewController {
+    
+    func hideKeybordOnTap() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
