@@ -24,6 +24,9 @@ class UserPhotosViewController: UIViewController {
         super.viewWillAppear(animated)
             loginButton.isHidden = false
     }
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return [.portrait, .portraitUpsideDown]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

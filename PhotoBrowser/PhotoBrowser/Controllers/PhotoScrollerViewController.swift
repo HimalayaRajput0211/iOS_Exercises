@@ -19,7 +19,9 @@ class PhotoScrollerViewController: UIViewController {
     }()
     
     @IBOutlet private weak var collectionView: UICollectionView!
-    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return [.portrait, .portraitUpsideDown]
+    }
     override func viewDidLoad() {
         layoutCollectionView()
         NotificationCenter.default.addObserver(self, selector: #selector(hideNavigationBar), name: .hideNavigationBar, object: nil)
