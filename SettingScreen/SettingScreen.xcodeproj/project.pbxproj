@@ -16,6 +16,7 @@
 		552C8F502423A17C00B28E82 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C8F4F2423A17C00B28E82 /* TableViewController.swift */; };
 		55485A2D2425E24400F202A7 /* SelectNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55485A2C2425E24400F202A7 /* SelectNetworkViewController.swift */; };
 		55485A312425F76C00F202A7 /* SingleSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55485A302425F76C00F202A7 /* SingleSwitchViewController.swift */; };
+		55E4F6E0242E2B1D003782D0 /* CellularTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4F6DF242E2B1D003782D0 /* CellularTableViewController.swift */; };
 		55FBFBD02423B8DB00A69FF2 /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FBFBCF2423B8DB00A69FF2 /* DesignableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		552C8F4F2423A17C00B28E82 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		55485A2C2425E24400F202A7 /* SelectNetworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNetworkViewController.swift; sourceTree = "<group>"; };
 		55485A302425F76C00F202A7 /* SingleSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSwitchViewController.swift; sourceTree = "<group>"; };
+		55E4F6DF242E2B1D003782D0 /* CellularTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellularTableViewController.swift; sourceTree = "<group>"; };
 		55FBFBCF2423B8DB00A69FF2 /* DesignableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 				552C8F3C242397AB00B28E82 /* TextViewController.swift */,
 				55485A2C2425E24400F202A7 /* SelectNetworkViewController.swift */,
 				55485A302425F76C00F202A7 /* SingleSwitchViewController.swift */,
+				55E4F6DF242E2B1D003782D0 /* CellularTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				55485A312425F76C00F202A7 /* SingleSwitchViewController.swift in Sources */,
 				552C8F3B242397AB00B28E82 /* SceneDelegate.swift in Sources */,
 				55FBFBD02423B8DB00A69FF2 /* DesignableView.swift in Sources */,
+				55E4F6E0242E2B1D003782D0 /* CellularTableViewController.swift in Sources */,
 				552C8F502423A17C00B28E82 /* TableViewController.swift in Sources */,
 				55485A2D2425E24400F202A7 /* SelectNetworkViewController.swift in Sources */,
 			);

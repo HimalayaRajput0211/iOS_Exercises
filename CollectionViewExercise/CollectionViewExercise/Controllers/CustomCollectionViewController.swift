@@ -28,16 +28,12 @@ class CustomCollectionViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        animate {
-            self.collectionView.performBatchUpdates({
-                self.currentLayout.itemSize.height = self.cellHeight
-                self.currentLayout.itemSize.width = self.cellWidth
-                self.currentLayout.minimumInteritemSpacing = self.cellItemSpacing
-                self.currentLayout.minimumLineSpacing = self.cellItemSpacing
-            }, completion: nil)
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentLayout.itemSize.height = cellHeight
+        currentLayout.itemSize.width = cellWidth
+        currentLayout.minimumInteritemSpacing = cellItemSpacing
+        currentLayout.minimumLineSpacing = cellItemSpacing
     }
     
     override func viewDidLoad() {
@@ -178,9 +174,11 @@ extension CustomCollectionViewController: UICollectionViewDataSource , UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? CustomCollectionViewCell {
+            collectionView.allowsSelection = false
             cell.flipCardAnimationWith(animationDuration: animationDuration) {
                 self.items.remove(at: indexPath.row)
                 self.collectionView.deleteItems(at: [indexPath])
+                self.collectionView.allowsSelection = true
             }
         }
     }

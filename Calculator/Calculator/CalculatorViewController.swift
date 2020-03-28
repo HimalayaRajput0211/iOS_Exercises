@@ -76,6 +76,9 @@ class CalculatorViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     private func resetCalculatorValues() {
         firstOperand = ""
         secondOperand = ""
@@ -91,8 +94,16 @@ class CalculatorViewController: UIViewController {
             configureGridforPortraitOrientation()
         }
     }
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        masterStack.isHidden = true
+    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        print("did transist")
+    }
+    
     
     private func configureGridforLandscapeOrientation() {
+      
         manageVisibility(for: .landscape)
         masterStack.axis = .vertical
         var verticalCount = 0
@@ -119,9 +130,12 @@ class CalculatorViewController: UIViewController {
                 }
             }
         }
+        
+         // masterStack.isHidden = false
     }
     
     private func configureGridforPortraitOrientation() {
+       // masterStack.isHidden = false
         if !stack4.isHidden {stack4.isHidden = true}
         masterStack.axis = .horizontal
         let horizontalStack = masterStack.arrangedSubviews.filter { !$0.isHidden }
@@ -147,6 +161,7 @@ class CalculatorViewController: UIViewController {
         }
         manageVisibility(for: .portrait)
         roundButtons(in: masterStack.arrangedSubviews.filter { !$0.isHidden } )
+        //  masterStack.isHidden = false
     }
     
     private func roundButtons(in views: [UIView]) {

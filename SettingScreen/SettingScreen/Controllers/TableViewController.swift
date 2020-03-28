@@ -102,6 +102,33 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         default: break
         }
     }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0: return 40.0
+        case 1: return 40.0
+        case 2: return 40.0
+        default: break
+        }
+        return 0.0
+    }
+    
+    private var count = 0
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            cell.isHidden = true
+        }
+        tableView.setNeedsDisplay()
+//        print(filteredSearchArray.count)
+//        if count < filteredSearchArray.count {
+//        if filteredSearchArray[count].indexpath != indexPath {
+//            cell.isHidden = true
+//             print(indexPath)
+//        }
+//          count += 1
+//        }
+//        print(count)
+
+    }
 }
 //MARK: Search bar configuration
 extension TableViewcontroller: UISearchBarDelegate {
@@ -110,7 +137,8 @@ extension TableViewcontroller: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        scrollToSearchedText()
+      //  scrollToSearchedText()
+        tableView.reloadData()
         searchBar.resignFirstResponder()
     }
 }

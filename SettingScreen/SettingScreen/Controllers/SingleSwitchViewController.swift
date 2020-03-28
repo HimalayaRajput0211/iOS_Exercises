@@ -14,7 +14,6 @@ class SingleSwitchViewController: UITableViewController {
     @IBOutlet weak var customSwitch: UISwitch!
     @IBOutlet weak var infoCell: UITableViewCell!
     @IBOutlet weak var customSwitchTitle: UILabel!
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -48,5 +47,12 @@ class SingleSwitchViewController: UITableViewController {
         delegate.update()
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 40.0
+        } else {
+            return 0.0
+        }
+    }
     
 }

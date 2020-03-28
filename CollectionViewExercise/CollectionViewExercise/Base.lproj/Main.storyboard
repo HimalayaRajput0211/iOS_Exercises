@@ -265,7 +265,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="bsZ-Yd-gCb">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bsZ-Yd-gCb">
                                 <rect key="frame" x="0.0" y="64" width="414" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="USU-9Q-rqx"/>
@@ -278,6 +278,7 @@
                                     <segment title="5"/>
                                     <segment title="6"/>
                                 </segments>
+                                <color key="tintColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="selectedSegmentTintColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="performOperation:" destination="BYZ-38-t0r" eventType="valueChanged" id="mYk-6A-M4u"/>

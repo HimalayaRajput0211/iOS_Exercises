@@ -159,7 +159,7 @@ class ConfigurationViewController: UIViewController {
     private func configureAnimationSpeed(for value: CGFloat) {
         animationSpeedStepper.value = Double(value)
         animationDuration = Double(value)
-        animationSpeedTextField.text = "\(Int(animationDuration))"
+        animationSpeedTextField.text = "\(animationDuration)"
     }
     private func configureWidth(for value: CGFloat) {
         widthStepper.value = Double(value)
