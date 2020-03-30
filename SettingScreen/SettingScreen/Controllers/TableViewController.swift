@@ -28,7 +28,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         SearchData(name: SettingItems.displayAndBrightness.rawValue, indexpath: IndexPath(row: 2, section: 2))
     ]
     
-    private var heightForIndexpaths: [IndexPath : Bool] = [
+    private var isHeightForIndexpaths: [IndexPath : Bool] = [
         IndexPath(row: 0, section: 0): true,
         IndexPath(row: 1, section: 0): true,
         IndexPath(row: 2, section: 0): true,
@@ -41,7 +41,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         IndexPath(row: 2, section: 2): true,
     ]
     
-    private var heightForSections: [Bool] = Array(repeating: true, count: 3)
+    private var isHeightForSections: [Bool] = Array(repeating: true, count: 3)
     
     lazy private var filteredSearchArray: [SearchData] = {
         return searchArray
@@ -121,18 +121,18 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
 extension TableViewcontroller: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if isSearchBarEmpty() {
-            heightForIndexpaths.forEach { heightForIndexpaths[$0.key] = true }
-            heightForSections.enumerated().forEach { heightForSections[$0.offset] = true }
+            isHeightForIndexpaths.forEach { isHeightForIndexpaths[$0.key] = true }
+            isHeightForSections.enumerated().forEach { isHeightForSections[$0.offset] = true }
         } else {
             filteredSearchArray = searchArray.filter { $0.name.lowercased().contains(searchText.lowercased())}
-            heightForIndexpaths.forEach { heightForIndexpaths[$0.key] = false }
-            heightForSections.enumerated().forEach { heightForSections[$0.offset] = false }
+            isHeightForIndexpaths.forEach { isHeightForIndexpaths[$0.key] = false }
+            isHeightForSections.enumerated().forEach { isHeightForSections[$0.offset] = false }
             filteredSearchArray.forEach {
-                heightForIndexpaths[$0.indexpath] = true
+                isHeightForIndexpaths[$0.indexpath] = true
                 switch $0.indexpath.section {
-                case 0: heightForSections[0] = true
-                case 1: heightForSections[1] = true
-                case 2: heightForSections[2] = true
+                case 0: isHeightForSections[0] = true
+                case 1: isHeightForSections[1] = true
+                case 2: isHeightForSections[2] = true
                 default: break
                 }
             }
@@ -163,12 +163,12 @@ extension TableViewcontroller: UISplitViewControllerDelegate {
 extension TableViewcontroller {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let isHeightForSection = heightForSections[section]
+        let isHeightForSection = isHeightForSections[section]
         return isHeightForSection ? sectionHeight : 0.0
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let isHeightForRow = heightForIndexpaths[indexPath] {
+        if let isHeightForRow = isHeightForIndexpaths[indexPath] {
             return isHeightForRow ? rowHeight : 0.0
         } else {
             return 0.0
@@ -176,7 +176,7 @@ extension TableViewcontroller {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let isCellVisible = heightForIndexpaths[indexPath]  {
+        if let isCellVisible = isHeightForIndexpaths[indexPath]  {
             isCellVisible ? (cell.isHidden = false) : (cell.isHidden = true)
         }
     }

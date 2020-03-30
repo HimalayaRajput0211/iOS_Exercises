@@ -76,9 +76,14 @@ class CalculatorViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        if UITraitCollection.current.verticalSizeClass == .compact {
+//            configureGridforLandscapeOrientation()
+//        } else {
+//            configureGridforPortraitOrientation()
+//        }
+//    }
     private func resetCalculatorValues() {
         firstOperand = ""
         secondOperand = ""
@@ -88,14 +93,39 @@ class CalculatorViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+//        view.isHidden = true
         if UITraitCollection.current.verticalSizeClass == .compact {
-            configureGridforLandscapeOrientation()
+       
+                self.configureGridforLandscapeOrientation()
+            
+           
         } else {
-            configureGridforPortraitOrientation()
+           
+                self.configureGridforPortraitOrientation()
+            
+            
         }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//            self.view.isHidden = false
+//            //self.view.alpha = 0.0
+//            self.masterStack.isHidden = false
+////            UIView.animate(withDuration: 0.3) {
+////                self.view.alpha = 1.0
+////            }
+//
+//        }
+        
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.masterStack.isHidden = false
+    }
+    
+    
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+      
         masterStack.isHidden = true
+       
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         print("did transist")
@@ -103,7 +133,7 @@ class CalculatorViewController: UIViewController {
     
     
     private func configureGridforLandscapeOrientation() {
-      
+        masterStack.isHidden = true
         manageVisibility(for: .landscape)
         masterStack.axis = .vertical
         var verticalCount = 0
@@ -130,12 +160,17 @@ class CalculatorViewController: UIViewController {
                 }
             }
         }
+      
         
+        
+      
+        print("configure grid complete ")
          // masterStack.isHidden = false
     }
     
     private func configureGridforPortraitOrientation() {
-       // masterStack.isHidden = false
+        masterStack.isHidden = true
+        // view.isHidden = true
         if !stack4.isHidden {stack4.isHidden = true}
         masterStack.axis = .horizontal
         let horizontalStack = masterStack.arrangedSubviews.filter { !$0.isHidden }
@@ -161,6 +196,11 @@ class CalculatorViewController: UIViewController {
         }
         manageVisibility(for: .portrait)
         roundButtons(in: masterStack.arrangedSubviews.filter { !$0.isHidden } )
+     
+              
+            
+
+         print("configure grid complete ")
         //  masterStack.isHidden = false
     }
     
@@ -174,6 +214,7 @@ class CalculatorViewController: UIViewController {
                 }
             }
         }
+        print("Rounding Button Complete")
     }
     
     private func configure(_ button: UIButton, for orientation: Orientation, at index: Int) {
@@ -197,6 +238,7 @@ class CalculatorViewController: UIViewController {
             button.titleLabel?.textColor = .white
         default: break
         }
+        print("button configuration complete")
     }
     
     private func manageVisibility(for orientation: Orientation) {
@@ -204,6 +246,7 @@ class CalculatorViewController: UIViewController {
         stack2.arrangedSubviews.last?.isHidden = orientation.isPortrait ? true : false
         stack3.arrangedSubviews.last?.isHidden = orientation.isPortrait ? true : false
         stack4.arrangedSubviews.last?.isHidden = orientation.isPortrait ? true : false
+        print("Manage visibility compete")
     }
 }
 
