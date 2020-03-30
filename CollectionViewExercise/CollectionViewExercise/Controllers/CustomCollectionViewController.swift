@@ -13,13 +13,13 @@ class CustomCollectionViewController: UIViewController {
     private var items = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     static let sectionInsetSpacing: CGFloat = 10.0
     private let insertingElements = ["A", "B", "C"]
-    var animationDuration: Double!
+    var animationDuration: Double = 0.0
     lazy private var currentLayout: UICollectionViewFlowLayout = {
         return collectionView.collectionViewLayout as? UICollectionViewFlowLayout  ?? UICollectionViewFlowLayout()
     }()
-    var cellHeight: CGFloat!
-    var cellWidth: CGFloat!
-    var cellItemSpacing: CGFloat!
+    var cellHeight: CGFloat?
+    var cellWidth: CGFloat?
+    var cellItemSpacing: CGFloat?
     
     @IBOutlet private weak var collectionView: UICollectionView! {
         didSet {
@@ -30,10 +30,10 @@ class CustomCollectionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        currentLayout.itemSize.height = cellHeight
-        currentLayout.itemSize.width = cellWidth
-        currentLayout.minimumInteritemSpacing = cellItemSpacing
-        currentLayout.minimumLineSpacing = cellItemSpacing
+        currentLayout.itemSize.height = cellHeight ?? 0.0
+        currentLayout.itemSize.width = cellWidth ?? 0.0
+        currentLayout.minimumInteritemSpacing = cellItemSpacing ?? 0.0
+        currentLayout.minimumLineSpacing = cellItemSpacing ?? 0.0
     }
     
     override func viewDidLoad() {
