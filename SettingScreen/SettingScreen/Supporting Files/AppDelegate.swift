@@ -10,22 +10,11 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-     //  UILabel.appearance().adjustsFontForContentSizeCategory = true
         return true
     }
    
-    func boldFont() {
-         UILabel.appearance().font = UIFont.boldSystemFont(ofSize: 20)
-    }
-    func normalFont() {
-          UILabel.appearance().font = UIFont.systemFont(ofSize: 15)
-    }
-
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

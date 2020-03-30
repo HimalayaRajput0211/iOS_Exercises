@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class TableViewcontroller: UITableViewController, MasterViewControllerUI {
-    
     private let rowHeight: CGFloat = 55.0
     private let sectionHeight: CGFloat = 40.0
     private var networkType: Settings.NetworkType!
@@ -29,35 +28,35 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         SearchData(name: SettingItems.displayAndBrightness.rawValue, indexpath: IndexPath(row: 2, section: 2))
     ]
     
-    private var isHeightForIndexpath : [IndexPath : Bool] = [
-        IndexPath(row: 0, section: 0) : true,
-        IndexPath(row: 1, section: 0) : true,
-        IndexPath(row: 2, section: 0) : true,
-        IndexPath(row: 3, section: 0) : true,
-        IndexPath(row: 4, section: 0) : true,
-        IndexPath(row: 0, section: 1) : true,
-        IndexPath(row: 1, section: 1) : true,
-        IndexPath(row: 0, section: 2) : true,
-        IndexPath(row: 1, section: 2) : true,
-        IndexPath(row: 2, section: 2) : true,
+    private var heightForIndexpaths: [IndexPath : Bool] = [
+        IndexPath(row: 0, section: 0): true,
+        IndexPath(row: 1, section: 0): true,
+        IndexPath(row: 2, section: 0): true,
+        IndexPath(row: 3, section: 0): true,
+        IndexPath(row: 4, section: 0): true,
+        IndexPath(row: 0, section: 1): true,
+        IndexPath(row: 1, section: 1): true,
+        IndexPath(row: 0, section: 2): true,
+        IndexPath(row: 1, section: 2): true,
+        IndexPath(row: 2, section: 2): true,
     ]
     
-    private var isHeightForSection: [Bool] = Array(repeating: true, count: 3)
+    private var heightForSections: [Bool] = Array(repeating: true, count: 3)
     
     lazy private var filteredSearchArray: [SearchData] = {
         return searchArray
     }()
     
-    @IBOutlet weak var searchBar: UISearchBar!{
+    @IBOutlet private weak var searchBar: UISearchBar!{
         didSet {
             searchBar.delegate = self
             searchBar.returnKeyType = .done
         }
     }
-    @IBOutlet weak var airplaneModeSwitch: UISwitch!
-    @IBOutlet weak var wifiNetworkNameLabel: UILabel!
-    @IBOutlet weak var bluetoothStatusLabel: UILabel! 
-    @IBOutlet weak var carrierNetworkNameLabel: UILabel!
+    @IBOutlet private weak var airplaneModeSwitch: UISwitch!
+    @IBOutlet private weak var wifiNetworkNameLabel: UILabel!
+    @IBOutlet private weak var bluetoothStatusLabel: UILabel!
+    @IBOutlet private weak var carrierNetworkNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -68,20 +67,15 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         super.viewWillAppear(animated)
         syncWithCoreData()
     }
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        }
-//    }
     
-    @IBAction func updateAirplaneModeStatus(_ sender: UISwitch) {
+    @IBAction private func updateAirplaneModeStatus(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "airplane_mode_status")
     }
     
     func update() {
         syncWithCoreData()
     }
-        
+    
     private func syncWithCoreData() {
         if UserDefaults.standard.bool(forKey: "airplane_mode_status") {
             airplaneModeSwitch.setOn(true, animated: true)
@@ -122,41 +116,23 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         default: break
         }
     }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return isHeightForSection[section] ? sectionHeight : 0.0
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let isHeightForRow = isHeightForIndexpath[indexPath] {
-            return isHeightForRow ? rowHeight : 0.0
-        } else {
-            return 0.0
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let isCellVisible = isHeightForIndexpath[indexPath]  {
-            !isCellVisible ? (cell.isHidden = true) : (cell.isHidden = false)
-        }
-    }
 }
 //MARK: Search bar configuration
 extension TableViewcontroller: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if isSearchBarEmpty() {
-            isHeightForIndexpath.forEach { isHeightForIndexpath[$0.key] = true }
-            isHeightForSection.enumerated().forEach { isHeightForSection[$0.offset] = true }
+            heightForIndexpaths.forEach { heightForIndexpaths[$0.key] = true }
+            heightForSections.enumerated().forEach { heightForSections[$0.offset] = true }
         } else {
             filteredSearchArray = searchArray.filter { $0.name.lowercased().contains(searchText.lowercased())}
-            isHeightForIndexpath.forEach { isHeightForIndexpath[$0.key] = false }
-            isHeightForSection.enumerated().forEach { isHeightForSection[$0.offset] = false }
+            heightForIndexpaths.forEach { heightForIndexpaths[$0.key] = false }
+            heightForSections.enumerated().forEach { heightForSections[$0.offset] = false }
             filteredSearchArray.forEach {
-                isHeightForIndexpath[$0.indexpath] = true
+                heightForIndexpaths[$0.indexpath] = true
                 switch $0.indexpath.section {
-                case 0: isHeightForSection[0] = true
-                case 1: isHeightForSection[1] = true
-                case 2: isHeightForSection[2] = true
+                case 0: heightForSections[0] = true
+                case 1: heightForSections[1] = true
+                case 2: heightForSections[2] = true
                 default: break
                 }
             }
@@ -180,12 +156,31 @@ extension TableViewcontroller: UISplitViewControllerDelegate {
             self.navigationController?.navigationBar.prefersLargeTitles = false
             return true
         }
-        self.navigationController?.navigationBar.prefersLargeTitles = true
         return false
     }
 }
 //MARK: row selection
 extension TableViewcontroller {
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let isHeightForSection = heightForSections[section]
+        return isHeightForSection ? sectionHeight : 0.0
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let isHeightForRow = heightForIndexpaths[indexPath] {
+            return isHeightForRow ? rowHeight : 0.0
+        } else {
+            return 0.0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let isCellVisible = heightForIndexpaths[indexPath]  {
+            isCellVisible ? (cell.isHidden = false) : (cell.isHidden = true)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0: selectedSection0(at: indexPath.row)

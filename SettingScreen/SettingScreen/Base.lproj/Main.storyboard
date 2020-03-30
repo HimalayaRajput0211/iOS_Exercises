@@ -695,7 +695,7 @@
             </objects>
             <point key="canvasLocation" x="1601" y="1476"/>
         </scene>
-        <!--Select Network View Controller-->
+        <!--Network-->
         <scene sceneID="Ddl-La-mWK">
             <objects>
                 <viewController storyboardIdentifier="SelectNetworkVC" id="dmM-Qs-TFM" customClass="SelectNetworkViewController" customModule="SettingScreen" customModuleProvider="target" sceneMemberID="viewController">
@@ -768,7 +768,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ilt-Ce-ib9"/>
                     </view>
-                    <navigationItem key="navigationItem" id="19t-Tu-ipZ"/>
+                    <navigationItem key="navigationItem" title="Network" id="19t-Tu-ipZ"/>
                     <connections>
                         <outletCollection property="networks" destination="fo4-hz-GnB" collectionClass="NSMutableArray" id="sXc-wr-igE"/>
                         <outletCollection property="networks" destination="kIo-YH-TeC" collectionClass="NSMutableArray" id="EDj-U8-DKA"/>

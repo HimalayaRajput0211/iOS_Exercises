@@ -8,16 +8,16 @@
 
 import Foundation
 import UIKit
+
 class SingleSwitchViewController: UITableViewController {
-    private let sectionHeight: CGFloat = 40.0
+    static private let sectionHeight: CGFloat = 40.0
     var singleSwitchType: Settings.SingleSwitchType!
     weak var delegate: MasterViewControllerUI!
-    @IBOutlet weak var customSwitch: UISwitch!
-    @IBOutlet weak var infoCell: UITableViewCell!
-    @IBOutlet weak var customSwitchTitle: UILabel!
+    @IBOutlet private weak var customSwitch: UISwitch!
+    @IBOutlet private weak var infoCell: UITableViewCell!
+    @IBOutlet private weak var customSwitchTitle: UILabel!
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         switch singleSwitchType {
         case .bluetooth:
             customSwitchTitle.text = SettingItems.bluetooth.rawValue
@@ -40,7 +40,7 @@ class SingleSwitchViewController: UITableViewController {
         }
     }
     
-    @IBAction func updateBluetoothStatus(_ sender: UISwitch) {
+    @IBAction private func updateBluetoothStatus(_ sender: UISwitch) {
         switch singleSwitchType {
         case .bluetooth: UserDefaults.standard.set(sender.isOn, forKey: "bluetooth_status")
         default: break
@@ -49,7 +49,7 @@ class SingleSwitchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-         return section == 0 ? sectionHeight : 0.0
+        return section == 0 ? SingleSwitchViewController.sectionHeight : 0.0
     }
     
 }
