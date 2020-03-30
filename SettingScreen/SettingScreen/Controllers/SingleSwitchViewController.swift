@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 class SingleSwitchViewController: UITableViewController {
+    private let sectionHeight: CGFloat = 40.0
     var singleSwitchType: Settings.SingleSwitchType!
     weak var delegate: MasterViewControllerUI!
     @IBOutlet weak var customSwitch: UISwitch!
@@ -22,9 +23,9 @@ class SingleSwitchViewController: UITableViewController {
             customSwitchTitle.text = SettingItems.bluetooth.rawValue
             infoCell.isHidden = true
             if UserDefaults.standard.bool(forKey: "bluetooth_status") {
-                customSwitch.setOn(true, animated: true)
+                customSwitch.setOn(true, animated: false)
             } else {
-                customSwitch.setOn(false, animated: true)
+                customSwitch.setOn(false, animated: false)
             }
             title = SettingItems.bluetooth.rawValue
         case .doNotDisturb:
@@ -48,11 +49,7 @@ class SingleSwitchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 40.0
-        } else {
-            return 0.0
-        }
+         return section == 0 ? sectionHeight : 0.0
     }
     
 }

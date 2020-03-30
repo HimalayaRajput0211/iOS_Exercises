@@ -8,7 +8,11 @@
 
 import Foundation
 import UIKit
+
 class TableViewcontroller: UITableViewController, MasterViewControllerUI {
+    
+    private let rowHeight: CGFloat = 55.0
+    private let sectionHeight: CGFloat = 40.0
     private var networkType: Settings.NetworkType!
     private var singleSwitchType: Settings.SingleSwitchType!
     private var textType: Settings.TextType!
@@ -24,12 +28,30 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         SearchData(name: SettingItems.wallpaper.rawValue, indexpath: IndexPath(row: 1, section: 2)),
         SearchData(name: SettingItems.displayAndBrightness.rawValue, indexpath: IndexPath(row: 2, section: 2))
     ]
+    
+    private var isHeightForIndexpath : [IndexPath : Bool] = [
+        IndexPath(row: 0, section: 0) : true,
+        IndexPath(row: 1, section: 0) : true,
+        IndexPath(row: 2, section: 0) : true,
+        IndexPath(row: 3, section: 0) : true,
+        IndexPath(row: 4, section: 0) : true,
+        IndexPath(row: 0, section: 1) : true,
+        IndexPath(row: 1, section: 1) : true,
+        IndexPath(row: 0, section: 2) : true,
+        IndexPath(row: 1, section: 2) : true,
+        IndexPath(row: 2, section: 2) : true,
+    ]
+    
+    private var isHeightForSection: [Bool] = Array(repeating: true, count: 3)
+    
     lazy private var filteredSearchArray: [SearchData] = {
         return searchArray
     }()
+    
     @IBOutlet weak var searchBar: UISearchBar!{
         didSet {
             searchBar.delegate = self
+            searchBar.returnKeyType = .done
         }
     }
     @IBOutlet weak var airplaneModeSwitch: UISwitch!
@@ -46,6 +68,11 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         super.viewWillAppear(animated)
         syncWithCoreData()
     }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        }
+//    }
     
     @IBAction func updateAirplaneModeStatus(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "airplane_mode_status")
@@ -54,14 +81,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
     func update() {
         syncWithCoreData()
     }
-    
-    private func scrollToSearchedText() {
-        if let indexPath = filteredSearchArray.first?.indexpath {
-            let scrollPosition = UITableView.ScrollPosition.none
-            tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: true)
-        }
-    }
-    
+        
     private func syncWithCoreData() {
         if UserDefaults.standard.bool(forKey: "airplane_mode_status") {
             airplaneModeSwitch.setOn(true, animated: true)
@@ -76,7 +96,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         }
         carrierNetworkNameLabel.text = UserDefaults.standard.string(forKey: "carrier_network_name") ?? ""
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case Identifiers.selectNetwork.rawValue:
@@ -102,45 +122,56 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         default: break
         }
     }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0: return 40.0
-        case 1: return 40.0
-        case 2: return 40.0
-        default: break
-        }
-        return 0.0
+        return isHeightForSection[section] ? sectionHeight : 0.0
     }
     
-    private var count = 0
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            cell.isHidden = true
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let isHeightForRow = isHeightForIndexpath[indexPath] {
+            return isHeightForRow ? rowHeight : 0.0
+        } else {
+            return 0.0
         }
-        tableView.setNeedsDisplay()
-//        print(filteredSearchArray.count)
-//        if count < filteredSearchArray.count {
-//        if filteredSearchArray[count].indexpath != indexPath {
-//            cell.isHidden = true
-//             print(indexPath)
-//        }
-//          count += 1
-//        }
-//        print(count)
-
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let isCellVisible = isHeightForIndexpath[indexPath]  {
+            !isCellVisible ? (cell.isHidden = true) : (cell.isHidden = false)
+        }
     }
 }
 //MARK: Search bar configuration
 extension TableViewcontroller: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredSearchArray = searchArray.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        if isSearchBarEmpty() {
+            isHeightForIndexpath.forEach { isHeightForIndexpath[$0.key] = true }
+            isHeightForSection.enumerated().forEach { isHeightForSection[$0.offset] = true }
+        } else {
+            filteredSearchArray = searchArray.filter { $0.name.lowercased().contains(searchText.lowercased())}
+            isHeightForIndexpath.forEach { isHeightForIndexpath[$0.key] = false }
+            isHeightForSection.enumerated().forEach { isHeightForSection[$0.offset] = false }
+            filteredSearchArray.forEach {
+                isHeightForIndexpath[$0.indexpath] = true
+                switch $0.indexpath.section {
+                case 0: isHeightForSection[0] = true
+                case 1: isHeightForSection[1] = true
+                case 2: isHeightForSection[2] = true
+                default: break
+                }
+            }
+        }
+        tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-      //  scrollToSearchedText()
-        tableView.reloadData()
         searchBar.resignFirstResponder()
     }
+    
+    private func isSearchBarEmpty() -> Bool {
+        return searchBar.text?.isEmpty ?? true
+    }
+    
 }
 //MARK: split ViewController configuration
 extension TableViewcontroller: UISplitViewControllerDelegate {
@@ -230,8 +261,8 @@ struct Settings {
     }
     
     enum TextType {
-       case general
-       case wallpaper
+        case general
+        case wallpaper
     }
 }
 
@@ -241,7 +272,7 @@ enum Identifiers: String {
     case selectNetwork = "SelectNetwork"
 }
 
-struct SearchData {
+struct SearchData: Equatable {
     var name: String
     var indexpath: IndexPath
 }

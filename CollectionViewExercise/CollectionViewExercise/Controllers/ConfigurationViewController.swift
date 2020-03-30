@@ -9,10 +9,22 @@
 import UIKit
 class ConfigurationViewController: UIViewController {
     static var maximumDuration: Double = 10.0
-    private var activeTextField: UITextField!
-    private var screenWidth: CGFloat!
-    private var screenHeight: CGFloat!
-    private var isPortraitOrientation: Bool!
+    private var activeTextField: ActiveTextField?
+    private var screenWidth: CGFloat {
+        if UIDevice.current.orientation.isPortrait {
+             return UIScreen.main.bounds.size.width
+        } else {
+            return UIScreen.main.bounds.size.height
+        }
+    }
+    private var screenHeight: CGFloat {
+        if UIDevice.current.orientation.isPortrait {
+           return UIScreen.main.bounds.size.height
+        } else {
+           return UIScreen.main.bounds.size.width
+        }
+    }
+    private var isPortraitOrientation: Bool = true
     private var maximumItemSpacing: CGFloat {
         return isPortraitOrientation ? screenWidth / 2 : screenHeight / 2
     }
@@ -64,7 +76,7 @@ class ConfigurationViewController: UIViewController {
     @IBOutlet private weak var animationSpeedTextField: UITextField! {
         didSet {
             animationSpeedTextField.delegate = self
-            animationSpeedTextField.keyboardType = .numberPad
+            animationSpeedTextField.keyboardType = .default
         }
     }
     
@@ -78,21 +90,15 @@ class ConfigurationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureScreenSize()
         hideKeybordOnTap()
+        keyBoardListeners()
+       
+    }
+    private func keyBoardListeners() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func configureScreenSize() {
-        if UIDevice.current.orientation.isPortrait {
-            screenWidth = UIScreen.main.bounds.size.width
-            screenHeight = UIScreen.main.bounds.size.height
-        } else {
-            screenHeight = UIScreen.main.bounds.size.width
-            screenWidth = UIScreen.main.bounds.size.height
-        }
-    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         switch UIDevice.current.orientation {
@@ -185,8 +191,19 @@ class ConfigurationViewController: UIViewController {
                 scrollView.scrollIndicatorInsets = contentInsets
                 var aRect: CGRect = self.view.frame
                 aRect.size.height -= keyboardFrame.size.height
-                if !(aRect.contains(activeTextField.bounds.origin)) {
-                    scrollView.scrollRectToVisible(activeTextField.frame, animated: true)
+                var activeView: UITextField? {
+                    switch activeTextField {
+                    case .animationSpeedTextField: return animationSpeedTextField
+                    case .widthTextField : return widthTextField
+                    case .heightTextField: return heightTextField
+                    case .itemSpacingTextField: return itemSpacingTextField
+                    default: return nil
+                    }
+                }
+                if let activeView = activeView {
+                    if !(aRect.contains(activeView.bounds.origin)) {
+                        scrollView.scrollRectToVisible(activeView.frame, animated: true)
+                    }
                 }
             }
         }
@@ -203,31 +220,31 @@ class ConfigurationViewController: UIViewController {
 extension ConfigurationViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let editingTextField = EditingTextField(rawValue: textField.tag)
         let value = CGFloat(textField.text)
-        switch editingTextField {
-        case .animationSpeed: configureAnimationSpeed(for: value)
-        case .witdth: configureWidth(for: value)
-        case .height: configureHeight(for: value)
-        case .itemSpacing: configureItemSpacing(for: value)
+        switch activeTextField {
+        case .animationSpeedTextField: configureAnimationSpeed(for: value)
+        case .widthTextField: configureWidth(for: value)
+        case .heightTextField: configureHeight(for: value)
+        case .itemSpacingTextField: configureItemSpacing(for: value)
         default: break
         }
         textField.resignFirstResponder()
-        return false
+        return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
-        textField.becomeFirstResponder()
+        textField.text = .none
+        activeTextField = ActiveTextField(rawValue: textField.tag)
     }
 }
 
 extension ConfigurationViewController {
-    enum EditingTextField: Int {
-        case animationSpeed = 100
-        case witdth = 101
-        case height = 102
-        case itemSpacing = 103
+    enum ActiveTextField: Int {
+        case animationSpeedTextField = 100
+        case widthTextField = 101
+        case heightTextField = 102
+        case itemSpacingTextField = 103
+        }
     }
-}
+
 

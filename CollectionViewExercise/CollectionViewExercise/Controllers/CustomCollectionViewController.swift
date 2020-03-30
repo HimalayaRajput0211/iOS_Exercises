@@ -10,12 +10,12 @@ import UIKit
 
 class CustomCollectionViewController: UIViewController {
     static let identifier = "CustomCollectionVC"
-    private var items = ["a", "b","c","d", "e","f","g", "h","i","j", "k","l","m", "n","o","p", "q","r","s", "t","u","v", "w","x","y","z"]
-    private let spacing: CGFloat = 10.0
-    private let insertingElements = ["A","B","C"]
+    private var items = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    static let sectionInsetSpacing: CGFloat = 10.0
+    private let insertingElements = ["A", "B", "C"]
     var animationDuration: Double!
     lazy private var currentLayout: UICollectionViewFlowLayout = {
-        return collectionView.collectionViewLayout as? CustomLayout ?? CustomLayout()
+        return collectionView.collectionViewLayout as? UICollectionViewFlowLayout  ?? UICollectionViewFlowLayout()
     }()
     var cellHeight: CGFloat!
     var cellWidth: CGFloat!
@@ -56,7 +56,7 @@ class CustomCollectionViewController: UIViewController {
     private func setupCollectionViewLayout() {
         let layout = CustomLayout()
         collectionView.collectionViewLayout = layout
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.sectionInset = UIEdgeInsets(top: CustomCollectionViewController.sectionInsetSpacing, left: CustomCollectionViewController.sectionInsetSpacing, bottom: CustomCollectionViewController.sectionInsetSpacing, right: CustomCollectionViewController.sectionInsetSpacing)
         layout.scrollDirection = .vertical
     }
     
