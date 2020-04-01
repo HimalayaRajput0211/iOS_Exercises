@@ -1,266 +1,135 @@
 //
-//  ViewController.swift
+//  NewCalculatorViewController.swift
 //  Calculator
 //
-//  Created by Himalaya Rajput on 23/03/20.
+//  Created by Himalaya Rajput on 31/03/20.
 //  Copyright © 2020 Himalaya Rajput. All rights reserved.
 //
 
 import UIKit
 class CalculatorViewController: UIViewController {
-    private var firstOperand = ""
-    private var secondOperand = ""
-    private var isOperatorSelected: Bool =  false
-    private var arithmeticOperation = ""
-    private var canPerformCalculationWithPreviousResult: Bool = false
-    @IBOutlet private weak var masterStack: UIStackView!
-    @IBOutlet private weak var stack1: UIStackView!
-    @IBOutlet private weak var stack2: UIStackView!
-    @IBOutlet private weak var stack3: UIStackView!
-    @IBOutlet private weak var stack4: UIStackView!
-    @IBOutlet weak var label: UILabel!
-    @IBAction private func updateCalculatorLogic(_ sender: UIButton) {
-        switch sender.currentTitle {
-        case "": break
-        case "+","-","*","/": arithmeticOperatorSelected(on: sender)
-        case "AC": resetCalculatorState()
-        case "=": calculateResult()
-        default: numericButtonSelected(on: sender)
-        }
-    }
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all
-    }
-    
-    private func arithmeticOperatorSelected(on button: UIButton ) {
-        if !isOperatorSelected {
-            arithmeticOperation = button.currentTitle!
-            label.text = nil
-            isOperatorSelected = true
-        } else {
-            resetCalculatorValues()
-        }
-    }
-    
-    private func resetCalculatorState() {
-        label.text = "0"
-        resetCalculatorValues()
-    }
-    
-    private func calculateResult() {
-        if isOperatorSelected, secondOperand != "" {
-            let exprssion = Expression(expression: firstOperand + " " + arithmeticOperation + " " + secondOperand  )
-            do {
-                label.text = try exprssion.evaluteExpression()
-                isOperatorSelected = false
-                secondOperand = ""
-                firstOperand = label.text!
-                canPerformCalculationWithPreviousResult = true
-            } catch {
-                label.text = "0"
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func numericButtonSelected(on button: UIButton) {
-        if let number = button.currentTitle {
-            if isOperatorSelected {
-                secondOperand += number
-                label.text = secondOperand
-            } else {
-                if canPerformCalculationWithPreviousResult { firstOperand = "" }
-                firstOperand += number
-                label.text = firstOperand
-            }
-        }
-    }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        if UITraitCollection.current.verticalSizeClass == .compact {
-//            configureGridforLandscapeOrientation()
-//        } else {
-//            configureGridforPortraitOrientation()
-//        }
-//    }
-    private func resetCalculatorValues() {
-        firstOperand = ""
-        secondOperand = ""
-        isOperatorSelected =  false
-        arithmeticOperation = ""
-    }
+    private var didStartEnteringFirstTime = true
+    private var shouldClearDefaultZero = true
+    private var enteringSecondNumber = false
+    private var firstNumber: String = ""
+    private var secondNumber: String = ""
+    private var arithmeticOperation: ArithmeticOperation?
+    @IBOutlet private var buttons: [UIButton]!
+    @IBOutlet private weak var display: UILabel!
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-//        view.isHidden = true
-        if UITraitCollection.current.verticalSizeClass == .compact {
-       
-                self.configureGridforLandscapeOrientation()
-            
-           
-        } else {
-           
-                self.configureGridforPortraitOrientation()
-            
-            
-        }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//            self.view.isHidden = false
-//            //self.view.alpha = 0.0
-//            self.masterStack.isHidden = false
-////            UIView.animate(withDuration: 0.3) {
-////                self.view.alpha = 1.0
-////            }
-//
-//        }
-        
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.masterStack.isHidden = false
+        circleTheButtons()
     }
     
+    @IBAction private func numberButtonTapped(_ sender: UIButton) {
+        if !didStartEnteringFirstTime {
+            display.text = ""
+            secondNumber = ""
+            didStartEnteringFirstTime = true
+        }
+        if shouldClearDefaultZero {
+            display.text = ""
+            shouldClearDefaultZero = false
+        }
+        if let previousText = display.text, let currentText = sender.currentTitle {
+            let newText = previousText + currentText
+            if isValidCount(for: newText) {
+                display.text = newText
+                if enteringSecondNumber {
+                    secondNumber = newText
+                }
+            }
+        }
+    }
+    
+    @IBAction private func commandButtonTapped(_ sender: UIButton) {
+        if let text = display.text {
+            didStartEnteringFirstTime = false
+            switch sender.tag {
+            case 0:
+                if let operation = arithmeticOperation {
+                    let exprssion = Expression(expression: firstNumber + " " + operation.rawValue + " " + secondNumber)
+                    if let result = exprssion.evaluteExpression() {
+                        display.text = result
+                        arithmeticOperation = nil
+                        enteringSecondNumber = false
+                    } else {
+                        clearCalculator()
+                    }
+                }
+            case 1:
+                arithmeticOperation = .addition
+                firstNumber = text
+                enteringSecondNumber = true
+            case 2:
+                arithmeticOperation = .subtraction
+                firstNumber = text
+                enteringSecondNumber = true
+            case 3:
+                arithmeticOperation = .multiplication
+                firstNumber = text
+                enteringSecondNumber = true
+            case 4:
+                arithmeticOperation = .division
+                firstNumber = text
+                enteringSecondNumber = true
+            case 5:
+                clearCalculator()
+            default:
+                break
+            }
+        }
+    }
+    
+    private func isValidCount(for text: String) -> Bool {
+        if Int(text) != nil  {
+            if text.count <= 15 {
+                return true
+            } else {
+                return false
+            }
+        }
+        if Double(text) != nil {
+            if text.count <= 20 {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
+    }
+    
+    private func clearCalculator() {
+        display.text = "0"
+        firstNumber = ""
+        secondNumber = ""
+        didStartEnteringFirstTime = true
+        enteringSecondNumber = false
+        shouldClearDefaultZero = true
+    }
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-      
-        masterStack.isHidden = true
-       
-    }
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        print("did transist")
-    }
-    
-    
-    private func configureGridforLandscapeOrientation() {
-        masterStack.isHidden = true
-        manageVisibility(for: .landscape)
-        masterStack.axis = .vertical
-        var verticalCount = 0
-        stack4.isHidden = true
-        let verticalStack = masterStack.arrangedSubviews.filter { !$0.isHidden }
-        roundButtons(in: verticalStack)
-        verticalStack.forEach { view in
-            if let stackView = view as? UIStackView {
-                stackView.axis = .horizontal
-                stackView.arrangedSubviews.forEach { view in
-                    if let button = view as? UIButton {
-                        switch stackView.arrangedSubviews.firstIndex(of: button) {
-                        case 0:
-                            if verticalCount != 0 {
-                                configure(button, for: .landscape, at: 0)
-                            }
-                        case 1,2,3:
-                            verticalCount += 1
-                            button.setTitle("\(verticalCount)", for: .normal)
-                        case 4: configure(button, for: .landscape, at: 4)
-                        default: break
-                        }
-                    }
-                }
-            }
+        super.willTransition(to: newCollection, with: coordinator)
+        view.alpha = 0.0
+        coordinator.animate(alongsideTransition: { _ in }) { _ in
+            self.view.alpha = 1.0
         }
-      
-        
-        
-      
-        print("configure grid complete ")
-         // masterStack.isHidden = false
     }
     
-    private func configureGridforPortraitOrientation() {
-        masterStack.isHidden = true
-        // view.isHidden = true
-        if !stack4.isHidden {stack4.isHidden = true}
-        masterStack.axis = .horizontal
-        let horizontalStack = masterStack.arrangedSubviews.filter { !$0.isHidden }
-        stack4.isHidden = false
-        var horizontalCount = 0
-        horizontalStack.forEach { view in
-            horizontalCount += 1
-            if let stackView = view as? UIStackView {
-                stackView.axis = .vertical
-                stackView.arrangedSubviews.forEach { view in
-                    if let button = view as? UIButton {
-                        switch stackView.arrangedSubviews.firstIndex(of: button) {
-                        case 0: configure(button, for: .portrait, at: 0)
-                        case 1: button.setTitle("\(horizontalCount)", for: .normal)
-                        case 2: button.setTitle("\(horizontalCount + 3)", for: .normal)
-                        case 3: button.setTitle("\(horizontalCount + 6)", for: .normal)
-                        case 4: configure(button, for: .portrait, at: 4)
-                        default: break
-                        }
-                    }
-                }
-            }
-        }
-        manageVisibility(for: .portrait)
-        roundButtons(in: masterStack.arrangedSubviews.filter { !$0.isHidden } )
-     
-              
-            
-
-         print("configure grid complete ")
-        //  masterStack.isHidden = false
-    }
-    
-    private func roundButtons(in views: [UIView]) {
-        views.forEach { view in
-            if let stackView = view as? UIStackView {
-                stackView.arrangedSubviews.forEach { view in
-                    if let button = view as? UIButton {
-                        button.layer.cornerRadius = button.frame.size.height / 2
-                    }
-                }
-            }
-        }
-        print("Rounding Button Complete")
-    }
-    
-    private func configure(_ button: UIButton, for orientation: Orientation, at index: Int) {
-        switch index {
-        case 0:
-            switch button.tag {
-            case 200: button.setTitle(orientation.isPortrait ? "" : ".", for: .normal)
-            case 201: button.setTitle(orientation.isPortrait ? "" : "0", for: .normal)
-            default: break
-            }
-            button.backgroundColor = orientation.isPortrait ? .white : .darkGray
-            button.titleLabel?.textColor = orientation.isPortrait ? .black : .white
-        case 4:
-            switch button.tag {
-            case 100: button.setTitle(orientation.isPortrait ? "." : "=", for: .normal)
-            case 101: button.setTitle(orientation.isPortrait ? "0" : "", for: .normal)
-            case 102: button.setTitle(orientation.isPortrait ? "" : "/", for: .normal)
-            default: break
-            }
-            button.backgroundColor = orientation.isPortrait ? .darkGray : .systemOrange
-            button.titleLabel?.textColor = .white
-        default: break
-        }
-        print("button configuration complete")
-    }
-    
-    private func manageVisibility(for orientation: Orientation) {
-        stack1.arrangedSubviews.last?.isHidden = orientation.isPortrait ? true : false
-        stack2.arrangedSubviews.last?.isHidden = orientation.isPortrait ? true : false
-        stack3.arrangedSubviews.last?.isHidden = orientation.isPortrait ? true : false
-        stack4.arrangedSubviews.last?.isHidden = orientation.isPortrait ? true : false
-        print("Manage visibility compete")
-    }
-}
-
-extension CalculatorViewController{
-    enum Orientation {
-        case landscape
-        case portrait
-        var isPortrait: Bool {
-            switch self {
-            case .landscape: return false
-            case .portrait: return true
-            }
+    private func circleTheButtons() {
+        var buttonCornerRadius: CGFloat?
+        for button in buttons {
+            buttonCornerRadius = button.frame.size.height / 2
+            guard let cornerRadius = buttonCornerRadius else { return }
+            button.layer.cornerRadius = cornerRadius
         }
     }
 }
 
-
+enum ArithmeticOperation: String {
+    case addition = "+"
+    case subtraction = "-"
+    case multiplication = "*"
+    case division = "/"
+}
