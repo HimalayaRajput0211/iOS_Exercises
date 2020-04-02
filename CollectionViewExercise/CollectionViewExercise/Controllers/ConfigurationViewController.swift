@@ -9,19 +9,19 @@
 import UIKit
 class ConfigurationViewController: UIViewController {
     static var maximumDuration: Double = 10.0
-    private var activeTextField: ActiveTextField?
+    private var currentEditingView: CurrentEditingView?
     private var screenWidth: CGFloat {
         if UIDevice.current.orientation.isPortrait {
-             return UIScreen.main.bounds.size.width
+            return UIScreen.main.bounds.size.width
         } else {
             return UIScreen.main.bounds.size.height
         }
     }
     private var screenHeight: CGFloat {
         if UIDevice.current.orientation.isPortrait {
-           return UIScreen.main.bounds.size.height
+            return UIScreen.main.bounds.size.height
         } else {
-           return UIScreen.main.bounds.size.width
+            return UIScreen.main.bounds.size.width
         }
     }
     private var isPortraitOrientation: Bool = true
@@ -50,7 +50,7 @@ class ConfigurationViewController: UIViewController {
         }
     }
     @MaximumDuration private var animationDuration: Double = 0.5
-  
+    
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var itemSpacingTextField: UITextField! {
         didSet {
@@ -91,10 +91,10 @@ class ConfigurationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeybordOnTap()
-        keyBoardListeners()
-       
+        setkeyBoardObservers()
+        
     }
-    private func keyBoardListeners() {
+    private func setkeyBoardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -192,7 +192,7 @@ class ConfigurationViewController: UIViewController {
                 var aRect: CGRect = self.view.frame
                 aRect.size.height -= keyboardFrame.size.height
                 var activeView: UITextField? {
-                    switch activeTextField {
+                    switch currentEditingView {
                     case .animationSpeedTextField: return animationSpeedTextField
                     case .widthTextField : return widthTextField
                     case .heightTextField: return heightTextField
@@ -221,7 +221,7 @@ extension ConfigurationViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let value = CGFloat(textField.text)
-        switch activeTextField {
+        switch currentEditingView {
         case .animationSpeedTextField: configureAnimationSpeed(for: value)
         case .widthTextField: configureWidth(for: value)
         case .heightTextField: configureHeight(for: value)
@@ -234,17 +234,17 @@ extension ConfigurationViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.text = .none
-        activeTextField = ActiveTextField(rawValue: textField.tag)
+        currentEditingView = CurrentEditingView(rawValue: textField.tag)
     }
 }
 
 extension ConfigurationViewController {
-    enum ActiveTextField: Int {
+    enum CurrentEditingView: Int {
         case animationSpeedTextField = 100
         case widthTextField = 101
         case heightTextField = 102
         case itemSpacingTextField = 103
-        }
     }
+}
 
 

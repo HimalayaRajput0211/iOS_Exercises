@@ -14,8 +14,8 @@ class CustomCollectionViewController: UIViewController {
     static let sectionInsetSpacing: CGFloat = 10.0
     private let insertingElements = ["A", "B", "C"]
     var animationDuration: Double = 0.0
-    lazy private var currentLayout: UICollectionViewFlowLayout = {
-        return collectionView.collectionViewLayout as? UICollectionViewFlowLayout  ?? UICollectionViewFlowLayout()
+    lazy private var currentLayout: CustomLayout = {
+        return collectionView.collectionViewLayout as? CustomLayout  ?? CustomLayout()
     }()
     var cellHeight: CGFloat?
     var cellWidth: CGFloat?

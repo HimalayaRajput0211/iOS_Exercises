@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class TableViewcontroller: UITableViewController, MasterViewControllerUI {
+    
     private let rowHeight: CGFloat = 55.0
     private let sectionHeight: CGFloat = 40.0
     private var networkType: Settings.NetworkType!
@@ -51,6 +52,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         didSet {
             searchBar.delegate = self
             searchBar.returnKeyType = .done
+            searchBar.showsCancelButton = true
         }
     }
     @IBOutlet private weak var airplaneModeSwitch: UISwitch!
@@ -76,6 +78,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         syncWithCoreData()
     }
     
+    
     private func syncWithCoreData() {
         if UserDefaults.standard.bool(forKey: "airplane_mode_status") {
             airplaneModeSwitch.setOn(true, animated: true)
@@ -90,6 +93,8 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         }
         carrierNetworkNameLabel.text = UserDefaults.standard.string(forKey: "carrier_network_name") ?? ""
     }
+    
+    @IBAction func unwindToMasterViewController(_ sender: UIStoryboardSegue) { }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -143,6 +148,13 @@ extension TableViewcontroller: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        searchBar.resignFirstResponder()
+        isHeightForIndexpaths.forEach { isHeightForIndexpaths[$0.key] = true }
+        isHeightForSections.enumerated().forEach { isHeightForSections[$0.offset] = true }
+        tableView.reloadData()
+    }
     
     private func isSearchBarEmpty() -> Bool {
         return searchBar.text?.isEmpty ?? true
@@ -152,7 +164,7 @@ extension TableViewcontroller: UISearchBarDelegate {
 //MARK: split ViewController configuration
 extension TableViewcontroller: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        if traitCollection.horizontalSizeClass != .regular || traitCollection.verticalSizeClass != .regular {
+        if traitCollection.horizontalSizeClass != .regular || traitCollection.verticalSizeClass == .regular {
             self.navigationController?.navigationBar.prefersLargeTitles = false
             return true
         }
@@ -178,6 +190,13 @@ extension TableViewcontroller {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let isCellVisible = isHeightForIndexpaths[indexPath]  {
             isCellVisible ? (cell.isHidden = false) : (cell.isHidden = true)
+        }
+    }
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if indexPath == IndexPath(row: 0, section: 0) {
+            return false
+        } else {
+            return true
         }
     }
     
