@@ -14,6 +14,7 @@
 		552C8F42242397AC00B28E82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 552C8F41242397AC00B28E82 /* Assets.xcassets */; };
 		552C8F45242397AC00B28E82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 552C8F43242397AC00B28E82 /* LaunchScreen.storyboard */; };
 		552C8F502423A17C00B28E82 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C8F4F2423A17C00B28E82 /* TableViewController.swift */; };
+		5539D67124371AE400F7FDD5 /* DisplayAndBrightnessTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539D67024371AE400F7FDD5 /* DisplayAndBrightnessTableViewController.swift */; };
 		55485A2D2425E24400F202A7 /* SelectNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55485A2C2425E24400F202A7 /* SelectNetworkViewController.swift */; };
 		55485A312425F76C00F202A7 /* SingleSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55485A302425F76C00F202A7 /* SingleSwitchViewController.swift */; };
 		55E4F6E0242E2B1D003782D0 /* CellularTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4F6DF242E2B1D003782D0 /* CellularTableViewController.swift */; };
@@ -30,6 +31,7 @@
 		552C8F44242397AC00B28E82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		552C8F46242397AC00B28E82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		552C8F4F2423A17C00B28E82 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		5539D67024371AE400F7FDD5 /* DisplayAndBrightnessTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayAndBrightnessTableViewController.swift; sourceTree = "<group>"; };
 		55485A2C2425E24400F202A7 /* SelectNetworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNetworkViewController.swift; sourceTree = "<group>"; };
 		55485A302425F76C00F202A7 /* SingleSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSwitchViewController.swift; sourceTree = "<group>"; };
 		55E4F6DF242E2B1D003782D0 /* CellularTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellularTableViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 				55485A2C2425E24400F202A7 /* SelectNetworkViewController.swift */,
 				55485A302425F76C00F202A7 /* SingleSwitchViewController.swift */,
 				55E4F6DF242E2B1D003782D0 /* CellularTableViewController.swift */,
+				5539D67024371AE400F7FDD5 /* DisplayAndBrightnessTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				552C8F39242397AB00B28E82 /* AppDelegate.swift in Sources */,
 				55485A312425F76C00F202A7 /* SingleSwitchViewController.swift in Sources */,
 				552C8F3B242397AB00B28E82 /* SceneDelegate.swift in Sources */,
+				5539D67124371AE400F7FDD5 /* DisplayAndBrightnessTableViewController.swift in Sources */,
 				55FBFBD02423B8DB00A69FF2 /* DesignableView.swift in Sources */,
 				55E4F6E0242E2B1D003782D0 /* CellularTableViewController.swift in Sources */,
 				552C8F502423A17C00B28E82 /* TableViewController.swift in Sources */,

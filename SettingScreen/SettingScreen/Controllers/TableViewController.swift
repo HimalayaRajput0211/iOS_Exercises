@@ -9,13 +9,22 @@
 import Foundation
 import UIKit
 
+struct PersistenceKeys {
+    static let airplaneModeStatus = "airplane_mode_status"
+    static let wifiNetworkName = "wifi_network_name"
+    static let bluetoothStatus = "bluetooth_status"
+    static let carrierNetworkName = "carrier_network_name"
+    static let cellularDataStatus = "cellular_data_status"
+}
+
 class TableViewcontroller: UITableViewController, MasterViewControllerUI {
-    
+    static private let tableviewContentHeight: CGFloat = 750.0
     private let rowHeight: CGFloat = 55.0
     private let sectionHeight: CGFloat = 40.0
     private var networkType: Settings.NetworkType!
     private var singleSwitchType: Settings.SingleSwitchType!
     private var textType: Settings.TextType!
+    
     private var searchArray: [SearchData] = [
         SearchData(name: SettingItems.airplaneMode.rawValue, indexpath: IndexPath(row: 0, section: 0)),
         SearchData(name: SettingItems.wifi.rawValue, indexpath: IndexPath(row: 1, section: 0)),
@@ -29,7 +38,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         SearchData(name: SettingItems.displayAndBrightness.rawValue, indexpath: IndexPath(row: 2, section: 2))
     ]
     
-    private var isHeightForIndexpaths: [IndexPath : Bool] = [
+    private var heightForIndexpathBooleanDictionary: [IndexPath : Bool] = [
         IndexPath(row: 0, section: 0): true,
         IndexPath(row: 1, section: 0): true,
         IndexPath(row: 2, section: 0): true,
@@ -42,8 +51,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         IndexPath(row: 2, section: 2): true,
     ]
     
-    private var isHeightForSections: [Bool] = Array(repeating: true, count: 3)
-    
+    private var heightForSectionBooleanArray: [Bool] = Array(repeating: true, count: 3)
     lazy private var filteredSearchArray: [SearchData] = {
         return searchArray
     }()
@@ -67,31 +75,36 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        syncWithCoreData()
+        syncWithSavedData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.contentSize.height = TableViewcontroller.tableviewContentHeight
+        
     }
     
     @IBAction private func updateAirplaneModeStatus(_ sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: "airplane_mode_status")
+        UserDefaults.standard.set(sender.isOn, forKey: PersistenceKeys.airplaneModeStatus)
     }
     
     func update() {
-        syncWithCoreData()
+        syncWithSavedData()
     }
     
-    
-    private func syncWithCoreData() {
-        if UserDefaults.standard.bool(forKey: "airplane_mode_status") {
+    private func syncWithSavedData() {
+        if UserDefaults.standard.bool(forKey: PersistenceKeys.airplaneModeStatus) {
             airplaneModeSwitch.setOn(true, animated: true)
         } else {
             airplaneModeSwitch.setOn(false, animated: true)
         }
-        wifiNetworkNameLabel.text = UserDefaults.standard.string(forKey: "wifi_network_name") ?? ""
-        if UserDefaults.standard.bool(forKey: "bluetooth_status") {
+        wifiNetworkNameLabel.text = UserDefaults.standard.string(forKey: PersistenceKeys.wifiNetworkName) ?? ""
+        if UserDefaults.standard.bool(forKey: PersistenceKeys.bluetoothStatus) {
             bluetoothStatusLabel.text = "On"
         } else {
             bluetoothStatusLabel.text = "Off"
         }
-        carrierNetworkNameLabel.text = UserDefaults.standard.string(forKey: "carrier_network_name") ?? ""
+        carrierNetworkNameLabel.text = UserDefaults.standard.string(forKey: PersistenceKeys.carrierNetworkName) ?? ""
     }
     
     @IBAction func unwindToMasterViewController(_ sender: UIStoryboardSegue) { }
@@ -126,18 +139,18 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
 extension TableViewcontroller: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if isSearchBarEmpty() {
-            isHeightForIndexpaths.forEach { isHeightForIndexpaths[$0.key] = true }
-            isHeightForSections.enumerated().forEach { isHeightForSections[$0.offset] = true }
+            heightForIndexpathBooleanDictionary.forEach { heightForIndexpathBooleanDictionary[$0.key] = true }
+            heightForSectionBooleanArray.enumerated().forEach { heightForSectionBooleanArray[$0.offset] = true }
         } else {
             filteredSearchArray = searchArray.filter { $0.name.lowercased().contains(searchText.lowercased())}
-            isHeightForIndexpaths.forEach { isHeightForIndexpaths[$0.key] = false }
-            isHeightForSections.enumerated().forEach { isHeightForSections[$0.offset] = false }
+            heightForIndexpathBooleanDictionary.forEach { heightForIndexpathBooleanDictionary[$0.key] = false }
+            heightForSectionBooleanArray.enumerated().forEach { heightForSectionBooleanArray[$0.offset] = false }
             filteredSearchArray.forEach {
-                isHeightForIndexpaths[$0.indexpath] = true
+                heightForIndexpathBooleanDictionary[$0.indexpath] = true
                 switch $0.indexpath.section {
-                case 0: isHeightForSections[0] = true
-                case 1: isHeightForSections[1] = true
-                case 2: isHeightForSections[2] = true
+                case 1: heightForSectionBooleanArray[1] = true
+                case 2: heightForSectionBooleanArray[2] = true
+                case 3: heightForSectionBooleanArray[3] = true
                 default: break
                 }
             }
@@ -148,11 +161,12 @@ extension TableViewcontroller: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.resignFirstResponder()
-        isHeightForIndexpaths.forEach { isHeightForIndexpaths[$0.key] = true }
-        isHeightForSections.enumerated().forEach { isHeightForSections[$0.offset] = true }
+        heightForIndexpathBooleanDictionary.forEach { heightForIndexpathBooleanDictionary[$0.key] = true }
+        heightForSectionBooleanArray.enumerated().forEach { heightForSectionBooleanArray[$0.offset] = true }
         tableView.reloadData()
     }
     
@@ -175,31 +189,28 @@ extension TableViewcontroller: UISplitViewControllerDelegate {
 extension TableViewcontroller {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let isHeightForSection = isHeightForSections[section]
+        let isHeightForSection = heightForSectionBooleanArray[section]
         return isHeightForSection ? sectionHeight : 0.0
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let isHeightForRow = isHeightForIndexpaths[indexPath] {
+        if let isHeightForRow = heightForIndexpathBooleanDictionary[indexPath] {
             return isHeightForRow ? rowHeight : 0.0
         } else {
             return 0.0
         }
     }
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0
+    }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let isCellVisible = isHeightForIndexpaths[indexPath]  {
+        cell.selectionStyle = .none
+        if let isCellVisible = heightForIndexpathBooleanDictionary[indexPath]  {
             isCellVisible ? (cell.isHidden = false) : (cell.isHidden = true)
         }
     }
-    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        if indexPath == IndexPath(row: 0, section: 0) {
-            return false
-        } else {
-            return true
-        }
-    }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0: selectedSection0(at: indexPath.row)

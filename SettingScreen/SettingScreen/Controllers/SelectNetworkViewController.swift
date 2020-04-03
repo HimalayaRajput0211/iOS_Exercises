@@ -24,8 +24,8 @@ class SelectNetworkViewController: UIViewController {
     
     @IBAction private func updateNetworkName(_ sender: UIButton) {
         switch networkType {
-        case .network : UserDefaults.standard.set(sender.currentTitle, forKey: "wifi_network_name")
-        case .carrier : UserDefaults.standard.set(sender.currentTitle, forKey: "carrier_network_name")
+        case .network : UserDefaults.standard.set(sender.currentTitle, forKey: PersistenceKeys.wifiNetworkName)
+        case .carrier : UserDefaults.standard.set(sender.currentTitle, forKey: PersistenceKeys.carrierNetworkName)
         }
         delegate.update()
     }
