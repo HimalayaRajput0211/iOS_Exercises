@@ -21,6 +21,7 @@ class CellularTableViewController: UITableViewController {
             cellularDataSwitch.setOn(false, animated: false)
         }
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureTableviewStyle()

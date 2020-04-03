@@ -37,6 +37,7 @@ class SingleSwitchViewController: UITableViewController {
         case .none : break
         }
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureTableviewStyle()

@@ -13,6 +13,7 @@ class CalculatorViewController: UIViewController {
     private var enteringSecondNumber = false
     private var firstNumber: String = ""
     private var secondNumber: String = ""
+    private var numericxpression: String = ""
     private var arithmeticOperation: ArithmeticOperation?
     @IBOutlet private var buttons: [UIButton]!
     @IBOutlet private weak var display: UILabel!
@@ -20,6 +21,23 @@ class CalculatorViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         circleTheButtons()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let expression = NSExpression(format: "2.0/3.0")
+        if let result = expression.expressionValue(with: nil, context: nil) as? Double {
+              if let intResult = Int(exactly: result ) {
+                       print(intResult)
+              } else {
+                print(result)
+            }
+            
+        }
+      
+    
+         
+        
+       
     }
     
     @IBAction private func numberButtonTapped(_ sender: UIButton) {
@@ -61,6 +79,8 @@ class CalculatorViewController: UIViewController {
             case 1:
                 arithmeticOperation = .addition
                 firstNumber = text
+                appendOperand(text)
+                appendOperator("+")
                 enteringSecondNumber = true
             case 2:
                 arithmeticOperation = .subtraction
@@ -78,6 +98,19 @@ class CalculatorViewController: UIViewController {
                 clearCalculator()
             default:
                 break
+            }
+        }
+    }
+    func appendOperand(_ operand: String) {
+        if let doubleOperand = Double(operand) {
+             numericxpression += "\(doubleOperand)"
+        }
+    }
+    func appendOperator(_ arithmeticOperator: Character) {
+        if let lastCharacter = numericxpression.last {
+            if !lastCharacter.isNumber {
+                numericxpression.removeLast()
+                numericxpression.append(arithmeticOperator)
             }
         }
     }
@@ -113,7 +146,9 @@ class CalculatorViewController: UIViewController {
         super.willTransition(to: newCollection, with: coordinator)
         view.alpha = 0.0
         coordinator.animate(alongsideTransition: { _ in }) { _ in
-            self.view.alpha = 1.0
+            UIView.animate(withDuration: 0.4) {
+                 self.view.alpha = 1.0
+            }
         }
     }
     

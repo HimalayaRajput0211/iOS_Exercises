@@ -60,7 +60,6 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
         didSet {
             searchBar.delegate = self
             searchBar.returnKeyType = .done
-            searchBar.showsCancelButton = true
         }
     }
     @IBOutlet private weak var airplaneModeSwitch: UISwitch!
@@ -71,11 +70,7 @@ class TableViewcontroller: UITableViewController, MasterViewControllerUI {
     override func awakeFromNib() {
         super.awakeFromNib()
         splitViewController?.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        syncWithSavedData()
+        splitViewController?.preferredDisplayMode = .allVisible
     }
     
     override func viewDidLayoutSubviews() {
@@ -159,17 +154,22 @@ extension TableViewcontroller: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
         searchBar.text = nil
         searchBar.resignFirstResponder()
         heightForIndexpathBooleanDictionary.forEach { heightForIndexpathBooleanDictionary[$0.key] = true }
         heightForSectionBooleanArray.enumerated().forEach { heightForSectionBooleanArray[$0.offset] = true }
         tableView.reloadData()
     }
-    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+   
     private func isSearchBarEmpty() -> Bool {
         return searchBar.text?.isEmpty ?? true
     }
@@ -178,7 +178,7 @@ extension TableViewcontroller: UISearchBarDelegate {
 //MARK: split ViewController configuration
 extension TableViewcontroller: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        if traitCollection.horizontalSizeClass != .regular || traitCollection.verticalSizeClass == .regular {
+        if traitCollection.horizontalSizeClass != .regular || traitCollection.verticalSizeClass != .regular {
             self.navigationController?.navigationBar.prefersLargeTitles = false
             return true
         }

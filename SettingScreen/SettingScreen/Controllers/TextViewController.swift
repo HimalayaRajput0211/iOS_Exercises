@@ -8,13 +8,7 @@
 
 import UIKit
 class TextViewController: UIViewController {
-    var textType = Settings.TextType.general
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        splitViewController?.preferredDisplayMode = .allVisible
-    }
-    
+    var textType = Settings.TextType.general    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         switch textType {

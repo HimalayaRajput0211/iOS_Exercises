@@ -19,6 +19,7 @@ class DisplayAndBrightnessTableViewController: UITableViewController {
         super.viewDidLayoutSubviews()
         configureTableviewStyle()
     }
+    
     private func configureTableviewStyle() {
         if UITraitCollection.current.horizontalSizeClass == .regular {
             if !(tableView.style == .insetGrouped) {
@@ -26,6 +27,7 @@ class DisplayAndBrightnessTableViewController: UITableViewController {
             }
         }
     }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
          return DisplayAndBrightnessTableViewController.sectionHeight
      }
@@ -37,5 +39,6 @@ class DisplayAndBrightnessTableViewController: UITableViewController {
             return 0.0
         }
     }
+   
  
 }
