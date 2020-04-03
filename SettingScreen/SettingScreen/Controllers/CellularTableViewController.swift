@@ -40,12 +40,6 @@ class CellularTableViewController: UITableViewController {
             }
         }
     }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.section != 0 {
-            cell.separatorInset.left = UIScreen.main.bounds.size.width
-        }
-    }
 }
 
 
