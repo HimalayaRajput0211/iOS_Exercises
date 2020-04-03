@@ -34,6 +34,7 @@ class CalculatorViewController: UIViewController {
     @IBAction private func numberButtonTapped(_ sender: UIButton) {
         if isUsingPreviousResult {
             numericExpression = ""
+            calculatorDisplayLabel.text = ""
             isUsingPreviousResult = false
         }
         if shouldClearDefaultZero {
