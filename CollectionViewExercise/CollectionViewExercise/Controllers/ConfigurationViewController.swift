@@ -9,7 +9,7 @@
 import UIKit
 class ConfigurationViewController: UIViewController {
     static var maximumDuration: Double = 10.0
-    private var currentEditingView: CurrentEditingView?
+    private var currentEditingView: EditingFieldType?
     private var screenWidth: CGFloat {
         if UIDevice.current.orientation.isPortrait {
             return UIScreen.main.bounds.size.width
@@ -234,12 +234,12 @@ extension ConfigurationViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.text = .none
-        currentEditingView = CurrentEditingView(rawValue: textField.tag)
+        currentEditingView = EditingFieldType(rawValue: textField.tag)
     }
 }
 
 extension ConfigurationViewController {
-    enum CurrentEditingView: Int {
+    enum EditingFieldType: Int {
         case animationSpeedTextField = 100
         case widthTextField = 101
         case heightTextField = 102
