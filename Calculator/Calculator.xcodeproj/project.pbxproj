@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		550BBF62242B753700930D7D /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550BBF61242B753700930D7D /* Expression.swift */; };
 		551256ED2428C2A300C58659 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551256EC2428C2A300C58659 /* AppDelegate.swift */; };
 		551256EF2428C2A300C58659 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551256EE2428C2A300C58659 /* SceneDelegate.swift */; };
 		551256F42428C2A300C58659 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 551256F22428C2A300C58659 /* Main.storyboard */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		550BBF61242B753700930D7D /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
 		551256E92428C2A300C58659 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		551256EC2428C2A300C58659 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		551256EE2428C2A300C58659 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,7 +67,6 @@
 		551256EB2428C2A300C58659 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				550BBF61242B753700930D7D /* Expression.swift */,
 				5532432324331B0B00BB7D78 /* CalculatorViewController.swift */,
 				550BBF63242B77DF00930D7D /* Supporting Files */,
 				551256F22428C2A300C58659 /* Main.storyboard */,
@@ -152,7 +149,6 @@
 				551256ED2428C2A300C58659 /* AppDelegate.swift in Sources */,
 				551256EF2428C2A300C58659 /* SceneDelegate.swift in Sources */,
 				5532432424331B0B00BB7D78 /* CalculatorViewController.swift in Sources */,
-				550BBF62242B753700930D7D /* Expression.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
