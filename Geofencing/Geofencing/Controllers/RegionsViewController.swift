@@ -12,8 +12,8 @@ import CoreLocation
 class RegionsViewController: UIViewController, AddRegionsViewControllerDelegate {
     private let locationManager = CLLocationManager()
     private var regions = [Region]()
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var segmentControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,15 +96,9 @@ class RegionsViewController: UIViewController, AddRegionsViewControllerDelegate 
     
     func addNewRegion(_ region: Region) {
         add(region)
-        startMonitoring(forRegion: region)
         saveRegions()
-        
     }
-    private func startMonitoring(forRegion region: Region) {
-        let circlularRegion = CLCircularRegion(center: region.coordinate, radius: region.radius, identifier: region.identifier)
-        locationManager.startMonitoring(for: circlularRegion)
-    }
-       
+    
     private func add(_ region: Region) {
         regions.append(region)
         mapView.addAnnotation(region)
@@ -156,6 +150,7 @@ class RegionsViewController: UIViewController, AddRegionsViewControllerDelegate 
             print("error in encoding")
         }
     }
+    
     private func loadAllRegions() {
         regions.removeAll()
         let allRegions = Region.allRegions()
@@ -175,23 +170,6 @@ extension RegionsViewController: CLLocationManagerDelegate {
         guard let location = locations.first else { return}
         centreOnLocation(location)
     }
-    
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-       if region is CLCircularRegion {
-            let title = "You have entered the region"
-            let message = "Welcome!!!"
-            showAlert(title: title, message: message)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        if region is CLCircularRegion {
-            let title = "You have Left the region"
-            let message = "Good bye!!!"
-            showAlert(title: title, message: message)
-        }
-    }
-    
 }
 
 extension RegionsViewController: MKMapViewDelegate {
@@ -229,7 +207,5 @@ extension RegionsViewController: MKMapViewDelegate {
             saveRegions()
         }
     }
-    
-    
 }
 

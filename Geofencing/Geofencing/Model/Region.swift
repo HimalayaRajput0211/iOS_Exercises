@@ -8,9 +8,11 @@
 
 import Foundation
 import MapKit
+
 struct PersistenceKeys {
     static let regionsData = "regions_data"
 }
+
 class Region: NSObject, Codable, MKAnnotation {
     private enum CodingKeys:String, CodingKey {
         case latitude, longitude, radius, identifier, note, isMonitoringEntry,isMonitoringExit

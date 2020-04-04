@@ -75,15 +75,18 @@ class AddRegionsViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
+    
     private func customizeLocationManager() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
+    
     private func setkeyBoardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
     @objc func keyboardDidShow(_ notification: NSNotification) {
         if let infoDict = notification.userInfo {
             if let keyboardFrame = infoDict["UIKeyboardFrameEndUserInfoKey"] as? CGRect {
