@@ -81,29 +81,13 @@ class CalculatorViewController: UIViewController {
                     }
                 }
             }
-        case 1:
+        case 1,2,3,4:
             if isValidOperand() {
-                appendOperator("+")
-                isUsingPreviousResult = false
-                didStartEnteringFirstOperand = false
-            }
-        case 2:
-            if isValidOperand() {
-                appendOperator("-")
-                isUsingPreviousResult = false
-                didStartEnteringFirstOperand = false
-            }
-        case 3:
-            if isValidOperand() {
-                appendOperator("*")
-                isUsingPreviousResult = false
-                didStartEnteringFirstOperand = false
-            }
-        case 4:
-            if isValidOperand() {
-                appendOperator("/")
-                isUsingPreviousResult = false
-                didStartEnteringFirstOperand = false
+                if let selectedOperator = sender.currentTitle {
+                    appendOperator(Character(selectedOperator))
+                    isUsingPreviousResult = false
+                    didStartEnteringFirstOperand = false
+                }
             }
         case 5:
             clearCalculator()
