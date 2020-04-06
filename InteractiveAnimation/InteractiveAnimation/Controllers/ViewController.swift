@@ -49,7 +49,12 @@ class ViewController: UIViewController {
     
     
     @objc func handleTapGesture(_ recognizer: UITapGestureRecognizer) {
-        startAnimation(forState: nextState, withDuration: animationDuration)
+        switch recognizer.state {
+        case .ended:
+             startAnimation(forState: nextState, withDuration: animationDuration)
+        default: break
+        }
+       
     }
     
     @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {

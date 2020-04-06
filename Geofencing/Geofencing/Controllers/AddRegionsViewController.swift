@@ -9,11 +9,13 @@
 import UIKit
 import MapKit
 import CoreLocation
+
 protocol AddRegionsViewControllerDelegate: AnyObject {
     func addNewRegion(_ region: Region)
 }
 
 class AddRegionsViewController: UIViewController {
+    
     static let identifier = "addRegions"
     private let locationManager = CLLocationManager()
     weak var delegate: AddRegionsViewControllerDelegate?

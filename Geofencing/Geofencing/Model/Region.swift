@@ -14,8 +14,9 @@ struct PersistenceKeys {
 }
 
 class Region: NSObject, Codable, MKAnnotation {
-    private enum CodingKeys:String, CodingKey {
-        case latitude, longitude, radius, identifier, note, isMonitoringEntry,isMonitoringExit
+    
+    private enum CodingKeys: String, CodingKey {
+        case latitude, longitude, radius, identifier, note, isMonitoringEntry, isMonitoringExit
     }
     
     var coordinate: CLLocationCoordinate2D
@@ -31,7 +32,7 @@ class Region: NSObject, Codable, MKAnnotation {
         return note
     }
     
-    init(coordinate: CLLocationCoordinate2D, radius: CLLocationDistance, identifier: String, note: String, isMonitoringExit: Bool,isMonitoringEntry: Bool) {
+    init(coordinate: CLLocationCoordinate2D, radius: CLLocationDistance, identifier: String, note: String, isMonitoringExit: Bool, isMonitoringEntry: Bool) {
         self.coordinate = coordinate
         self.radius = radius
         self.identifier = identifier
@@ -66,9 +67,10 @@ class Region: NSObject, Codable, MKAnnotation {
     static func allRegions() -> [Region] {
         guard let regionsData = UserDefaults.standard.data(forKey: PersistenceKeys.regionsData) else { return [] }
         let decoder = JSONDecoder()
-        if let regions = try? decoder.decode(Array.self, from: regionsData) as [Region] {
+        if let regions = try? decoder.decode([Region].self, from: regionsData) {
             return regions
         }
         return []
     }
+    
 }

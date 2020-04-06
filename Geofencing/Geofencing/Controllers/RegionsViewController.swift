@@ -9,10 +9,15 @@
 import UIKit
 import MapKit
 import CoreLocation
-class RegionsViewController: UIViewController, AddRegionsViewControllerDelegate {
+class RegionsViewController: UIViewController {
+    
     private let locationManager = CLLocationManager()
     private var regions = [Region]()
-    @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var mapView: MKMapView! {
+        didSet {
+            
+        }
+    }
     @IBOutlet private weak var segmentControl: UISegmentedControl!
     
     override func viewDidLoad() {
@@ -94,42 +99,7 @@ class RegionsViewController: UIViewController, AddRegionsViewControllerDelegate 
         mapView.showsUserLocation = true
     }
     
-    func addNewRegion(_ region: Region) {
-        add(region)
-        saveRegions()
-    }
-    
-    private func add(_ region: Region) {
-        regions.append(region)
-        mapView.addAnnotation(region)
-        addRadiusOverlay(forRegion: region)
-        updateRegionsCount()
-    }
-    
-    private func remove(_ region: Region) {
-        guard let index = regions.firstIndex(of: region) else { return }
-        regions.remove(at: index)
-        mapView.removeAnnotation(region)
-        removeRadiusOverlay(forRegion: region)
-        updateRegionsCount()
-    }
-    
-    private func addRadiusOverlay(forRegion region: Region) {
-        let circle = MKCircle(center: region.coordinate, radius: region.radius)
-        mapView.addOverlay(circle)
-    }
-    
-    private func removeRadiusOverlay(forRegion region: Region) {
-        guard let overlays = mapView?.overlays else { return }
-        for overlay in overlays {
-            guard let circleOverlay = overlay as? MKCircle else { continue }
-            let coord = circleOverlay.coordinate
-            if coord.latitude == region.coordinate.latitude && coord.longitude == region.coordinate.longitude && circleOverlay.radius == region.radius {
-                mapView?.removeOverlay(circleOverlay)
-            }
-        }
-    }
-    
+   
     private func centreOnLocation(_ location: CLLocation) {
         let span = MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0)
         let region = MKCoordinateRegion(center:location.coordinate, span: span)
@@ -163,6 +133,11 @@ class RegionsViewController: UIViewController, AddRegionsViewControllerDelegate 
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
+    @objc func handleTapGesture() {
+        
+    }
+    
 }
 
 extension RegionsViewController: CLLocationManagerDelegate {
@@ -207,5 +182,44 @@ extension RegionsViewController: MKMapViewDelegate {
             saveRegions()
         }
     }
+}
+
+extension RegionsViewController: AddRegionsViewControllerDelegate {
+    func addNewRegion(_ region: Region) {
+        add(region)
+        saveRegions()
+    }
+    
+    private func add(_ region: Region) {
+        regions.append(region)
+        mapView.addAnnotation(region)
+        addRadiusOverlay(forRegion: region)
+        updateRegionsCount()
+    }
+    
+    private func remove(_ region: Region) {
+        guard let index = regions.firstIndex(of: region) else { return }
+        regions.remove(at: index)
+        mapView.removeAnnotation(region)
+        removeRadiusOverlay(forRegion: region)
+        updateRegionsCount()
+    }
+    
+    private func addRadiusOverlay(forRegion region: Region) {
+        let circle = MKCircle(center: region.coordinate, radius: region.radius)
+        mapView.addOverlay(circle)
+    }
+    
+    private func removeRadiusOverlay(forRegion region: Region) {
+        guard let overlays = mapView?.overlays else { return }
+        for overlay in overlays {
+            guard let circleOverlay = overlay as? MKCircle else { continue }
+            let coord = circleOverlay.coordinate
+            if coord.latitude == region.coordinate.latitude && coord.longitude == region.coordinate.longitude && circleOverlay.radius == region.radius {
+                mapView?.removeOverlay(circleOverlay)
+            }
+        }
+    }
+    
 }
 
