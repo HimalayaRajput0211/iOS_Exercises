@@ -13,11 +13,8 @@ class RegionsViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     private var regions = [Region]()
-    @IBOutlet private weak var mapView: MKMapView! {
-        didSet {
-            
-        }
-    }
+    private var neededZoomIntoLocation: Bool = true
+    @IBOutlet private weak var mapView: MKMapView!
     @IBOutlet private weak var segmentControl: UISegmentedControl!
     
     override func viewDidLoad() {
@@ -31,9 +28,6 @@ class RegionsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
-        if let location = locationManager.location {
-            centreOnLocation(location)
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,7 +73,12 @@ class RegionsViewController: UIViewController {
     }
     
     @IBAction func zoomOnCurrentLocation(_ sender: UIBarButtonItem) {
-        mapView.zoomToUserLocation()
+        if neededZoomIntoLocation {
+            mapView.zoomToUserLocation()
+            neededZoomIntoLocation = false
+        } else {
+            showAlert(title: "Alert", message: "Already zoomed in..")
+        }
     }
     
     private func customizeSegmentControl() {
@@ -99,11 +98,11 @@ class RegionsViewController: UIViewController {
         mapView.showsUserLocation = true
     }
     
-   
     private func centreOnLocation(_ location: CLLocation) {
         let span = MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0)
-        let region = MKCoordinateRegion(center:location.coordinate, span: span)
+        let region = MKCoordinateRegion(center: location.coordinate, span: span)
         mapView.setRegion(region, animated: true)
+        neededZoomIntoLocation = true
     }
     
     private func updateRegionsCount() {
@@ -127,17 +126,6 @@ class RegionsViewController: UIViewController {
         print(allRegions.count)
         allRegions.forEach { add($0) }
     }
-    
-    private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
-    @objc func handleTapGesture() {
-        
-    }
-    
 }
 
 extension RegionsViewController: CLLocationManagerDelegate {
@@ -220,6 +208,6 @@ extension RegionsViewController: AddRegionsViewControllerDelegate {
             }
         }
     }
-    
 }
+
 

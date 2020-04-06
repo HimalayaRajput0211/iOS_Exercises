@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55366D1A243B84D0008EA010 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55366D19243B84D0008EA010 /* Utilities.swift */; };
 		553AF81C24359CD40087D491 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF81B24359CD40087D491 /* Region.swift */; };
 		55C6063224349F7E0010A50B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C6063124349F7E0010A50B /* AppDelegate.swift */; };
 		55C6063424349F7E0010A50B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C6063324349F7E0010A50B /* SceneDelegate.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		55366D19243B84D0008EA010 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		553AF81B24359CD40087D491 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		55C6062E24349F7E0010A50B /* Geofencing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geofencing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C6063124349F7E0010A50B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				55B58F712437C3CC004A3799 /* Supporting Files */,
 				55C6063724349F7E0010A50B /* Main.storyboard */,
 				55C6063F24349F7F0010A50B /* Info.plist */,
+				55366D19243B84D0008EA010 /* Utilities.swift */,
 			);
 			path = Geofencing;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55366D1A243B84D0008EA010 /* Utilities.swift in Sources */,
 				55C606492434BFC10010A50B /* AddRegionsViewController.swift in Sources */,
 				55C6063624349F7E0010A50B /* RegionsViewController.swift in Sources */,
 				55C6063224349F7E0010A50B /* AppDelegate.swift in Sources */,
