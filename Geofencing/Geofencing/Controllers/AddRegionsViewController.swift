@@ -34,6 +34,7 @@ class AddRegionsViewController: UIViewController {
     @IBOutlet private weak var entryView: UIView!
     @IBOutlet private weak var exitView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet weak var saveButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +77,7 @@ class AddRegionsViewController: UIViewController {
             isMonitoringExit = !isMonitoringExit
         default: break
         }
+       customizeSaveButton()
     }
     
     @IBAction func addRegion(_ sender: UIButton) {
@@ -93,10 +95,19 @@ class AddRegionsViewController: UIViewController {
     }
     
     private func customizeLocationManager() {
-        locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         mapView.showsUserLocation = true
+    }
+    
+    private func customizeSaveButton() {
+        if isMonitoringEntry || isMonitoringExit {
+            saveButton.setTitleColor(.white, for: .normal)
+            saveButton.isEnabled = true
+        } else {
+            saveButton.setTitleColor(.gray, for: .normal)
+            saveButton.isEnabled = false
+        }
     }
     
     private func setkeyBoardObservers() {
@@ -145,17 +156,25 @@ class AddRegionsViewController: UIViewController {
     }
 }
 
-extension AddRegionsViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
-        centreOnLocation(location)
+extension AddRegionsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == noteTextField {
+            radiusTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
     }
 }
 
-extension AddRegionsViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+extension AddRegionsViewController {
+    func hideKeybordOnTap() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 

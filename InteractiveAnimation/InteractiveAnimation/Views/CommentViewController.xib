@@ -30,7 +30,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pan-gQ-78T">
-                            <rect key="frame" x="0.0" y="20" width="375" height="24"/>
+                            <rect key="frame" x="0.0" y="30" width="375" height="24"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="PMY-1I-0rf" secondAttribute="trailing" id="3kh-jH-8oj"/>
                         <constraint firstItem="PMY-1I-0rf" firstAttribute="leading" secondItem="5UW-yP-sei" secondAttribute="leading" id="8sr-RC-tP9"/>
-                        <constraint firstItem="pan-gQ-78T" firstAttribute="top" secondItem="5UW-yP-sei" secondAttribute="top" constant="20" symbolic="YES" id="AYL-jq-Wpn"/>
+                        <constraint firstItem="pan-gQ-78T" firstAttribute="top" secondItem="5UW-yP-sei" secondAttribute="top" constant="30" id="AYL-jq-Wpn"/>
                         <constraint firstAttribute="height" constant="65" id="YJs-vy-WGG"/>
                         <constraint firstItem="PMY-1I-0rf" firstAttribute="top" secondItem="5UW-yP-sei" secondAttribute="top" constant="20" id="bIX-Qs-HZY"/>
                         <constraint firstAttribute="trailing" secondItem="pan-gQ-78T" secondAttribute="trailing" id="m6d-gG-q1n"/>

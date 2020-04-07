@@ -11,6 +11,7 @@ import MapKit
 import CoreLocation
 class RegionsViewController: UIViewController {
     
+    static let annotationViewIdentifier = "myRegions"
     private let locationManager = CLLocationManager()
     private var regions = [Region]()
     private var neededZoomIntoLocation: Bool = true
@@ -130,8 +131,7 @@ class RegionsViewController: UIViewController {
 
 extension RegionsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return}
-        centreOnLocation(location)
+      neededZoomIntoLocation = true
     }
 }
 
@@ -148,15 +148,15 @@ extension RegionsViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let identifier = "myRegions"
         guard annotation is Region else { return nil }
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: RegionsViewController.annotationViewIdentifier) as? MKPinAnnotationView
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: RegionsViewController.annotationViewIdentifier)
             annotationView?.canShowCallout = true
             let removeButton = UIButton(type: .custom)
             removeButton.frame = CGRect(x: 0, y: 0, width: 23, height: 23)
-            removeButton.setImage(UIImage(named: "deleteRegion")!, for: .normal)
+            guard let buttonImage = UIImage(named: ImageAsset.deleteRegion.rawValue)else { return nil }
+            removeButton.setImage(buttonImage, for: .normal)
             annotationView?.leftCalloutAccessoryView = removeButton
         } else {
             annotationView?.annotation = annotation
@@ -210,4 +210,7 @@ extension RegionsViewController: AddRegionsViewControllerDelegate {
     }
 }
 
+enum ImageAsset: String {
+    case deleteRegion
+}
 
