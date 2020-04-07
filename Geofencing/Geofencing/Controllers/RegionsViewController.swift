@@ -15,7 +15,16 @@ class RegionsViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var regions = [Region]()
     private var neededZoomIntoLocation: Bool = true
-    @IBOutlet private weak var mapView: MKMapView!
+    private var shouldStoreLatitudeDelta: Bool = true
+    private var zoomToUserLocationButtonPressed = false
+    private var minimumZoomInLatitudeDelta: Double?
+    private var latitudeDeltaArray = [Double]()
+    @IBOutlet private weak var mapView: MKMapView! {
+        didSet {
+            mapView.showsUserLocation = true
+            mapView.isRotateEnabled = false
+        }
+    }
     @IBOutlet private weak var segmentControl: UISegmentedControl!
     
     override func viewDidLoad() {
@@ -74,9 +83,11 @@ class RegionsViewController: UIViewController {
     }
     
     @IBAction func zoomOnCurrentLocation(_ sender: UIBarButtonItem) {
+        zoomToUserLocationButtonPressed = true
         if neededZoomIntoLocation {
-            mapView.zoomToUserLocation()
-            neededZoomIntoLocation = false
+            if mapView.zoomToUserLocation() {
+                neededZoomIntoLocation = false
+            }
         } else {
             showAlert(title: "Alert", message: "Already zoomed in..")
         }
@@ -96,7 +107,6 @@ class RegionsViewController: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        mapView.showsUserLocation = true
     }
     
     private func centreOnLocation(_ location: CLLocation) {
@@ -131,7 +141,7 @@ class RegionsViewController: UIViewController {
 
 extension RegionsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-      neededZoomIntoLocation = true
+        neededZoomIntoLocation = true
     }
 }
 
@@ -168,6 +178,30 @@ extension RegionsViewController: MKMapViewDelegate {
         if let region = view.annotation as? Region {
             remove(region)
             saveRegions()
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if zoomToUserLocationButtonPressed {
+            if !latitudeDeltaArray.isEmpty && shouldStoreLatitudeDelta {
+                shouldStoreLatitudeDelta = false
+                minimumZoomInLatitudeDelta = latitudeDeltaArray.removeLast()
+            }
+            if let latitudeDelta = minimumZoomInLatitudeDelta {
+                if mapView.region.span.latitudeDelta > latitudeDelta {
+                    neededZoomIntoLocation = true
+                } else {
+                    neededZoomIntoLocation = false
+                }
+            }
+        }
+    }
+    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        if zoomToUserLocationButtonPressed {
+            if shouldStoreLatitudeDelta {
+                latitudeDeltaArray.append(mapView.region.span.latitudeDelta)
+            }
         }
     }
 }
@@ -213,4 +247,3 @@ extension RegionsViewController: AddRegionsViewControllerDelegate {
 enum ImageAsset: String {
     case deleteRegion
 }
-

@@ -22,9 +22,16 @@ class AddRegionsViewController: UIViewController {
     private var isMonitoringExit: Bool = false
     private var isMonitoringEntry: Bool = true
     private var neededZoomIntoLocation: Bool = true
+    private var shouldStoreLatitudeDelta: Bool = true
+    private var zoomToUserLocationButtonPressed = false
+    private var latitudeDeltaArray = [Double]()
+    private var minimumZoomInLatitudeDelta: Double?
     private var selectedCoordinate: CLLocationCoordinate2D?
     @IBOutlet private weak var mapView: MKMapView! {
         didSet {
+            mapView.showsUserLocation = true
+            mapView.isRotateEnabled = false
+            mapView.delegate = self
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
             mapView.addGestureRecognizer(tapGesture)
         }
@@ -59,9 +66,11 @@ class AddRegionsViewController: UIViewController {
     }
     
     @IBAction func zoomOnCurrentLocation(_ sender: UIBarButtonItem) {
+        zoomToUserLocationButtonPressed = true
         if neededZoomIntoLocation {
-            mapView.zoomToUserLocation()
-            neededZoomIntoLocation = false
+            if mapView.zoomToUserLocation() {
+                neededZoomIntoLocation = false
+            }
         } else {
             showAlert(title: "Alert", message: "Already zoomed in..")
         }
@@ -77,7 +86,7 @@ class AddRegionsViewController: UIViewController {
             isMonitoringExit = !isMonitoringExit
         default: break
         }
-       customizeSaveButton()
+        customizeSaveButton()
     }
     
     @IBAction func addRegion(_ sender: UIButton) {
@@ -95,9 +104,9 @@ class AddRegionsViewController: UIViewController {
     }
     
     private func customizeLocationManager() {
+        locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        mapView.showsUserLocation = true
     }
     
     private func customizeSaveButton() {
@@ -178,3 +187,47 @@ extension AddRegionsViewController {
     }
 }
 
+extension AddRegionsViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: RegionsViewController.annotationViewIdentifier) as? MKPinAnnotationView
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: RegionsViewController.annotationViewIdentifier)
+        } else {
+            annotationView?.annotation = annotation
+        }
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        print(mapView.region.span.latitudeDelta)
+        if zoomToUserLocationButtonPressed {
+            if !latitudeDeltaArray.isEmpty && shouldStoreLatitudeDelta {
+                shouldStoreLatitudeDelta = false
+                minimumZoomInLatitudeDelta = latitudeDeltaArray.removeLast()
+            }
+            if let latitudeDelta = minimumZoomInLatitudeDelta {
+                if mapView.region.span.latitudeDelta > latitudeDelta {
+                    neededZoomIntoLocation = true
+                } else {
+                    neededZoomIntoLocation = false
+                }
+            }
+        }
+    }
+    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        if zoomToUserLocationButtonPressed {
+            print(mapView.region.span.latitudeDelta)
+            if shouldStoreLatitudeDelta {
+                latitudeDeltaArray.append(mapView.region.span.latitudeDelta)
+            }
+        }
+    }
+}
+
+extension AddRegionsViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        neededZoomIntoLocation = true
+    }
+}

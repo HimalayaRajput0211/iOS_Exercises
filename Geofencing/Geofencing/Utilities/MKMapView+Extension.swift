@@ -10,11 +10,12 @@ import Foundation
 import MapKit
 
 extension MKMapView {
-    func zoomToUserLocation() {
-        guard let coordinate = userLocation.location?.coordinate else { return }
+    func zoomToUserLocation() -> Bool {
+        guard let coordinate = userLocation.location?.coordinate else { return false }
         let center = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: center, span: span)
         setRegion(region, animated: true)
+        return true
     }
 }
