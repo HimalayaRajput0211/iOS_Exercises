@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
-import UserNotifications
+
 class RegionsViewController: UIViewController {
     var messages = [String]()
     static let annotationViewIdentifier = "myRegions"
@@ -39,11 +39,15 @@ class RegionsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
+        for region in regions {
+          startMonitoring(region)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         locationManager.stopUpdatingLocation()
+        stopMonitoringRegions()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -158,13 +162,13 @@ class RegionsViewController: UIViewController {
 extension RegionsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         neededZoomIntoLocation = true
+        messages.removeAll()
         if let presentedAlert = self.presentedViewController as? UIAlertController {
             presentedAlert.dismiss(animated: true, completion: nil)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        messages.removeAll()
         messages.append("Welcome, You enter the region.")
         showAlert()
     }
@@ -278,6 +282,12 @@ extension RegionsViewController: AddRegionsViewControllerDelegate {
         circularRegion.notifyOnExit = region.isMonitoringExit
         circularRegion.notifyOnEntry = region.isMonitoringEntry
         locationManager.startMonitoring(for: circularRegion)
+    }
+    
+    private func stopMonitoringRegions() {
+        for region in locationManager.monitoredRegions {
+            locationManager.stopMonitoring(for: region)
+        }
     }
 }
 
