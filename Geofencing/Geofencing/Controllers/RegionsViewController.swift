@@ -158,6 +158,9 @@ class RegionsViewController: UIViewController {
 extension RegionsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         neededZoomIntoLocation = true
+        if let presentedAlert = self.presentedViewController as? UIAlertController {
+            presentedAlert.dismiss(animated: true, completion: nil)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
