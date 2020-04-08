@@ -89,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				55C6063024349F7E0010A50B /* Geofencing */,
-				55C6063F24349F7F0010A50B /* Info.plist */,
 				55C6062F24349F7E0010A50B /* Products */,
 				55C606452434A76C0010A50B /* Frameworks */,
 			);
@@ -106,6 +105,7 @@
 		55C6063024349F7E0010A50B /* Geofencing */ = {
 			isa = PBXGroup;
 			children = (
+				55C6063F24349F7F0010A50B /* Info.plist */,
 				55B58F732437C3F7004A3799 /* Model */,
 				55B58F722437C3E1004A3799 /* Controllers */,
 				55C6063724349F7E0010A50B /* Main.storyboard */,

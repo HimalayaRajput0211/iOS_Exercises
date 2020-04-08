@@ -143,6 +143,12 @@ extension RegionsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         neededZoomIntoLocation = true
     }
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        showAlert(title: "Welcome", message: "you enter the region")
+    }
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        showAlert(title: "Good Bye", message: "you exit the region")
+    }
 }
 
 extension RegionsViewController: MKMapViewDelegate {
@@ -209,6 +215,7 @@ extension RegionsViewController: MKMapViewDelegate {
 extension RegionsViewController: AddRegionsViewControllerDelegate {
     func addNewRegion(_ region: Region) {
         add(region)
+        startMonitoring(region)
         saveRegions()
     }
     
@@ -241,6 +248,12 @@ extension RegionsViewController: AddRegionsViewControllerDelegate {
                 mapView?.removeOverlay(circleOverlay)
             }
         }
+    }
+    private func startMonitoring(_ region: Region) {
+        let circularRegion = CLCircularRegion(center: region.coordinate, radius: region.radius, identifier: region.identifier)
+        circularRegion.notifyOnExit = region.isMonitoringExit
+        circularRegion.notifyOnEntry = region.isMonitoringEntry
+        locationManager.startMonitoring(for: circularRegion)
     }
 }
 
