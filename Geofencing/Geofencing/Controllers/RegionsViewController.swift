@@ -9,8 +9,9 @@
 import UIKit
 import MapKit
 import CoreLocation
+import UserNotifications
 class RegionsViewController: UIViewController {
-    
+    var messages = [String]()
     static let annotationViewIdentifier = "myRegions"
     private let locationManager = CLLocationManager()
     private var regions = [Region]()
@@ -137,17 +138,37 @@ class RegionsViewController: UIViewController {
         print(allRegions.count)
         allRegions.forEach { add($0) }
     }
+    private func showAlert() {
+        guard messages.count > 0 else { return }
+        if let message = messages.first {
+            func removeAndShowNextMessage() {
+                messages.removeFirst()
+                showAlert()
+            }
+            let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default) { action in
+                removeAndShowNextMessage()
+            })
+            present(alert, animated: true, completion: nil)
+        }
+        
+    }
 }
 
 extension RegionsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         neededZoomIntoLocation = true
     }
+    
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        showAlert(title: "Welcome", message: "you enter the region")
+        messages.removeAll()
+        messages.append("Welcome, You enter the region.")
+        showAlert()
     }
+    
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        showAlert(title: "Good Bye", message: "you exit the region")
+        messages.append("Good bye, You exit the region.")
+        showAlert()
     }
 }
 
